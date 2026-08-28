@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work Artificial | AIOS for Swiss beauty & hair salons</title>
+<meta name="description" content="Work Artificial builds AIOS, the AI Operations System that answers, books, and follows up for Swiss beauty and hair salons. Built to beat hiring on speed, cost, and consistency.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23000000'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='1'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%23ff0011'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23ff0011' stroke-opacity='0.35' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%23ff0011'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23ff0011' stroke-opacity='0.35' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700,800&display=swap">
+<style>
+  :root{
+    --bg:#000000;
+    --bg-alt:#0a0a0a;
+    --text:#ffffff;
+    --text-dim:rgba(255,255,255,0.75);
+    --text-mute:rgba(255,255,255,0.5);
+    --text-faint:rgba(255,255,255,0.28);
+    --accent:#ff0011;
+    --accent-btn:#d60007;
+    --card-border:rgba(255,255,255,0.08);
+    --radius-pill:999px;
+    --radius-card:16px;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .9s var(--ease), transform .9s var(--ease);}
+  .reveal.revealed{opacity:1; transform:translateY(0);}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes heroBreathe{0%,100%{opacity:.5; transform:translate(-50%,-6%) scale(1);} 50%{opacity:.75; transform:translate(-50%,-4%) scale(1.06);}}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Switzer','Iowan Old Style',Georgia,serif;
+    font-weight:400;
+    line-height:1.4;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1280px; margin:0 auto; padding:0 40px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+    backdrop-filter:blur(6px);
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-weight:500; font-size:15px; letter-spacing:0.08em; text-transform:uppercase;}
+  .logo svg{height:20px; width:auto;}
+  .bh-logo{
+    width:34px; height:34px; border-radius:50%; position:relative; overflow:hidden;
+    flex-shrink:0; background:#000;
+    box-shadow:0 0 14px rgba(255,0,17,0.22), inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+  .btn-talk{
+    background:#fff; color:var(--accent-btn);
+    font-weight:500; font-size:14px;
+    padding:11px 22px; border-radius:var(--radius-pill);
+    border:none; cursor:pointer;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  .btn-talk:hover{transform:translateY(-1px); opacity:.92;}
+
+  /* ---------- universe hand (Originkit Hero-28 extraction) ---------- */
+  .hero-visual{ flex:1 1 400px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .hero-visual-caption{ width:100%; max-width:460px; margin-bottom:12px; min-height:22px; }
+  @keyframes twBlink{ 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+  .uh-wrap{
+    position:relative; width:100%; max-width:580px;
+    aspect-ratio:733.681 / 512.049;
+    margin-top:-48px;
+  }
+  .uh-blackhole{ position:absolute; inset:0; background:transparent; overflow:hidden; }
+  .uh-hand-mask{
+    position:absolute;
+    top:47.19%; left:37.11%; height:67.5%; width:42.85%;
+    pointer-events:none; overflow:hidden;
+    -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 50%,
+      rgba(0,0,0,1) 0%, rgba(0,0,0,1) 37.9%, rgba(0,0,0,0.994) 48.3%,
+      rgba(0,0,0,0.952) 55.2%, rgba(0,0,0,0.894) 58.6%, rgba(0,0,0,0.797) 62.1%,
+      rgba(0,0,0,0.661) 65.5%, rgba(0,0,0,0.5) 69%, rgba(0,0,0,0.339) 72.4%,
+      rgba(0,0,0,0.203) 75.9%, rgba(0,0,0,0.106) 79.3%, rgba(0,0,0,0.048) 82.8%,
+      rgba(0,0,0,0.019) 86.2%, rgba(0,0,0,0.006) 89.7%, transparent 100%);
+    mask-image: radial-gradient(ellipse closest-side at 50% 50%,
+      rgba(0,0,0,1) 0%, rgba(0,0,0,1) 37.9%, rgba(0,0,0,0.994) 48.3%,
+      rgba(0,0,0,0.952) 55.2%, rgba(0,0,0,0.894) 58.6%, rgba(0,0,0,0.797) 62.1%,
+      rgba(0,0,0,0.661) 65.5%, rgba(0,0,0,0.5) 69%, rgba(0,0,0,0.339) 72.4%,
+      rgba(0,0,0,0.203) 75.9%, rgba(0,0,0,0.106) 79.3%, rgba(0,0,0,0.048) 82.8%,
+      rgba(0,0,0,0.019) 86.2%, rgba(0,0,0,0.006) 89.7%, transparent 100%);
+  }
+  .uh-hand-mask img{
+    position:absolute;
+    top:6.76%; left:-3.11%; height:100.94%; width:110.88%;
+    max-width:none; opacity:0.5;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:72vh;
+    display:flex; align-items:center;
+    padding:30px 24px 60px;
+    background:#000;
+    overflow:hidden;
+  }
+  .hero-inner{
+    position:relative; z-index:1;
+    width:100%; max-width:1280px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap:56px; flex-wrap:wrap;
+  }
+  .hero-copy{ flex:1 1 460px; text-align:left; }
+  .hero-copy h1{ max-width:none; }
+  .hero-eyebrow-marquee{
+    width:100%; max-width:380px; aspect-ratio:1440/150;
+    margin-bottom:14px; overflow:hidden;
+  }
+  .hero-eyebrow-marquee svg{ display:block; }
+  .hero h1, .hero p.sub, .hero .mgrad-btn, .hero-visual, .hero-eyebrow-marquee{animation:fadeUp .9s var(--ease) both;}
+  .hero-eyebrow-marquee{animation-delay:0s;}
+  .hero h1{animation-delay:.08s;}
+  .hero p.sub{animation-delay:.2s;}
+  .hero .mgrad-btn{animation-delay:.32s;}
+  .hero-visual{animation-delay:.15s;}
+  .hero h1{
+    font-size:56px;
+    font-weight:300;
+    letter-spacing:-0.01em;
+    max-width:920px;
+    color:#fff;
+  }
+  .hero h1 .dim{color:var(--text-mute);}
+  .hero p.sub{
+    max-width:520px;
+    margin:26px 0 0;
+    font-size:18px;
+    color:var(--text-dim);
+    font-weight:400;
+  }
+  .hero p.sub b{color:#fff; font-weight:600;}
+  .capture{
+    margin-top:38px;
+    display:flex; align-items:center;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:var(--radius-pill);
+    padding:6px 6px 6px 22px;
+    max-width:420px; width:100%;
+  }
+
+  /* ---------- moving gradient button (Originkit-style traveling border, vanilla port, lightweight) ---------- */
+  /* Same CSS-transform-only architecture as the packages neon border: the comet
+     gradient is built once and only ever animated via transform:rotate(), so it's
+     compositor-cheap. A second static ring (full solid gradient) fades in on
+     hover to replace the moving comet, matching the source component's hover
+     state, purely with a CSS opacity transition — no JS needed for that part. */
+  .mgrad-btn{
+    position:relative; display:inline-flex; align-items:center; justify-content:center;
+    box-sizing:border-box; width:fit-content;
+    margin-top:38px;
+    padding:13px 26px; border-radius:999px;
+    background:#270505; color:#FFDAF8;
+    font-weight:600; font-size:14px; line-height:1.3em; letter-spacing:0;
+    text-decoration:none; cursor:pointer; user-select:none;
+    white-space:nowrap;
+    transition:background-color .25s ease, color .25s ease;
+  }
+  .mgrad-btn:hover{ background:#000000; color:#FFDAF8; }
+  .mgrad-btn-border{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    box-sizing:border-box; padding:2px; border-radius:999px;
+    mask-image:linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    mask-clip:content-box, border-box; mask-composite:exclude;
+    -webkit-mask-image:linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    -webkit-mask-clip:content-box, border-box; -webkit-mask-composite:xor;
+    overflow:hidden;
+  }
+  .mgrad-btn-ring{ position:absolute; inset:0; }
+  .mgrad-btn-ring-spin{
+    background:repeating-conic-gradient(from 0deg, transparent 0deg, transparent 0deg, #3600FF 81deg, #00FF94 180deg);
+    animation:mgradSpin 11.4s linear infinite;
+  }
+  .mgrad-btn-ring-hover{
+    background:conic-gradient(from 0deg, #3600FF, #00FF94, #3600FF, #00FF94, #3600FF);
+    opacity:0; transition:opacity .25s ease;
+  }
+  .mgrad-btn:hover .mgrad-btn-ring-hover{ opacity:1; }
+  @keyframes mgradSpin{ to{ transform:rotate(360deg); } }
+  .mgrad-btn-label{ position:relative; z-index:1; }
+  .capture input{
+    flex:1; background:none; border:none; outline:none;
+    color:#fff; font-family:inherit; font-size:15px;
+    padding:10px 0;
+  }
+  .capture input::placeholder{color:var(--text-mute);}
+  .capture button{
+    background:#fff; color:var(--accent-btn);
+    border:none; border-radius:var(--radius-pill);
+    padding:12px 22px; font-weight:500; font-size:14px;
+    font-family:inherit; cursor:pointer; white-space:nowrap;
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:64px 0;}
+  .eyebrow-row{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:24px; margin-bottom:44px; flex-wrap:wrap;
+  }
+  .eyebrow-row h2{font-size:30px; font-weight:400;}
+  .eyebrow-row h2 .dim{color:var(--text-mute);}
+  .eyebrow-row p{color:var(--text-mute); font-size:15px; max-width:420px;}
+
+  /* ---------- cards carousel ---------- */
+  .cards-head{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    padding:0 40px 32px; flex-wrap:wrap; gap:16px;
+  }
+  .cards-head h2{font-size:26px; font-weight:400;}
+  .cards-head h2 .dim{color:var(--text-mute);}
+  .cards-head p{color:var(--text-mute); font-size:14px; margin-top:6px;}
+  .nav-arrows{display:flex; gap:10px;}
+  .nav-arrows button{
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.04);
+    color:#fff; font-size:16px; cursor:pointer;
+  }
+  .nav-arrows button:hover{background:rgba(255,255,255,0.1);}
+  .card-track-outer{overflow-x:auto; scroll-behavior:smooth; padding:0 40px 12px; scrollbar-width:none;}
+  .card-track-outer::-webkit-scrollbar{display:none;}
+  .card-track{display:flex; gap:24px; width:max-content;}
+  .aios-card{
+    width:340px; min-height:320px;
+    border-radius:var(--radius-card);
+    border:1px solid var(--card-border);
+    padding:28px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    position:relative; overflow:hidden;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+  }
+  .aios-card:hover{transform:translateY(-8px); border-color:rgba(255,255,255,0.22); box-shadow:0 20px 40px rgba(0,0,0,0.4);}
+  .aios-card .tag{font-size:13px; color:rgba(255,255,255,0.55); font-weight:480;}
+  .aios-card h3{font-size:23px; font-weight:500; margin-top:70px;}
+  .aios-card p{font-size:14px; color:var(--text-dim); margin-top:10px; max-width:280px;}
+  .aios-card .stat{margin-top:36px; font-size:12px; color:var(--text-mute); display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.08); padding-top:14px;}
+  .aios-card .stat b{color:rgba(255,255,255,0.85); font-weight:500;}
+  .c1{background:radial-gradient(circle at 30% 100%, rgba(90,90,90,0.5), rgba(15,15,15,0.9));}
+  .c2{background:radial-gradient(circle at 30% 100%, rgba(20,60,70,0.6), rgba(5,15,20,0.95));}
+  .c2 .tag{color:#5fc9e0;}
+  .c3{background:radial-gradient(circle at 30% 100%, rgba(75,55,10,0.6), rgba(20,14,3,0.95));}
+  .c3 .tag{color:#e0b25f;}
+  .c4{background:radial-gradient(circle at 30% 100%, rgba(45,20,60,0.6), rgba(12,5,18,0.95));}
+  .c4 .tag{color:#c58fe0;}
+  .c5{background:radial-gradient(circle at 30% 100%, rgba(15,50,35,0.6), rgba(3,15,10,0.95));}
+  .c5 .tag{color:#5fe0a3;}
+  .c6{background:radial-gradient(circle at 30% 100%, rgba(70,20,20,0.6), rgba(18,4,4,0.95));}
+  .c6 .tag{color:#e07d7d;}
+
+  /* ---------- benchmark ---------- */
+  .bench-grid{ display:flex; align-items:center; gap:64px; flex-wrap:wrap; }
+  .bench-left{ flex:1 1 440px; text-align:left; order:2; }
+  .bench-right{ flex:1 1 380px; display:flex; justify-content:center; order:1; }
+  .stat-cards{display:flex; flex-direction:column; gap:16px; margin-top:24px;}
+  .stat-card{
+    background:#0a0a0a; border:1px solid var(--card-border); border-radius:var(--radius-card);
+    padding:32px;
+  }
+  .stat-card .label{color:var(--text-mute); font-size:15px;}
+  .stat-card .big{font-size:32px; color:var(--accent); font-weight:500; margin-top:14px;}
+  .stat-card .sub2{font-size:22px; margin-top:4px;}
+  .stat-card .note{color:var(--text-mute); font-size:13px; margin-top:14px;}
+  .bench-footnote{margin-top:16px; color:var(--text-faint); font-size:12px;}
+
+  /* ---------- live chat (Originkit-style iOS message list, vanilla port) ---------- */
+  .chat-frame{
+    position:relative; overflow:hidden;
+    width:100%; max-width:460px; min-height:360px;
+    background:transparent; border:none;
+    padding:8px; display:flex; flex-direction:column; justify-content:center;
+  }
+  .chat-list{ display:flex; flex-direction:column; gap:16px; }
+  .chat-row{ display:flex; width:100%; }
+  .chat-row.me{ justify-content:flex-end; }
+  .chat-row.them{ justify-content:flex-start; }
+  .chat-msg{
+    max-width:82%; display:flex; flex-direction:column;
+    opacity:0; transform:translateY(10px) scale(0.85);
+    transition:opacity .5s cubic-bezier(.34,1.56,.64,1), transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .chat-msg.shown{ opacity:1; transform:translateY(0) scale(1); }
+  .chat-row.me .chat-msg{ align-items:flex-end; }
+  .chat-row.them .chat-msg{ align-items:flex-start; }
+  .chat-time{ font-size:11px; color:#8E8E93; margin-bottom:5px; padding:0 12px; }
+  .chat-bubble{
+    padding:11px 16px; font-size:15px; line-height:1.4;
+    box-shadow:0 8px 20px rgba(0,0,0,0.35);
+  }
+  .chat-row.them .chat-bubble{ background:#E9E9EB; color:#000; border-radius:20px 20px 20px 4px; }
+  .chat-row.me .chat-bubble{ background:#007AFF; color:#fff; border-radius:20px 20px 4px 20px; }
+
+  /* ---------- packages (neon-border card, Originkit-style, vanilla port) ---------- */
+  .pkg-card-frame{ position:relative; border-radius:24px; }
+  .pkg-neon-host{ z-index:0; }
+  @keyframes pkgNeonSpin{ to{ transform:rotate(360deg); } }
+  .pkg-card{
+    position:relative; z-index:1;
+    background:#0a0a0a; border:1px solid var(--card-border); border-radius:24px;
+    padding:64px 56px; text-align:center;
+  }
+  .pkg-icon{
+    width:72px; height:72px; margin:0 auto 26px; border-radius:20px;
+    background:linear-gradient(135deg, #CC9149, #7a4d1c);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 44px rgba(204,145,73,0.35);
+  }
+  .pkg-icon svg{ width:32px; height:32px; color:#fff; }
+  .pkg-title{ font-size:36px; font-weight:500; color:#fff; }
+  .pkg-subtitle{ margin-top:14px; color:var(--text-mute); font-size:17px; max-width:520px; margin-left:auto; margin-right:auto; }
+  .pkg-cols{
+    margin-top:56px; display:grid; grid-template-columns:1fr 1fr; gap:48px;
+    text-align:left; max-width:900px; margin-left:auto; margin-right:auto;
+  }
+  .pkg-col-head{ display:flex; align-items:center; gap:12px; margin-bottom:22px; }
+  .pkg-col-icon{
+    width:40px; height:40px; border-radius:12px; flex-shrink:0;
+    background:rgba(204,145,73,0.12); display:flex; align-items:center; justify-content:center;
+  }
+  .pkg-col-icon svg{ width:18px; height:18px; color:#CC9149; }
+  .pkg-col-head h3{ font-size:19px; font-weight:600; color:#fff; }
+  .pkg-checklist{ list-style:none; display:flex; flex-direction:column; gap:16px; }
+  .pkg-checklist li{ display:flex; align-items:flex-start; gap:12px; color:var(--text-dim); font-size:15px; line-height:1.5; }
+  .pkg-check{
+    flex-shrink:0; width:20px; height:20px; margin-top:1px; border-radius:50%;
+    background:rgba(204,145,73,0.15);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pkg-check svg{ width:11px; height:11px; color:#CC9149; }
+  .pkg-usage{
+    margin-top:56px; padding:28px 32px; border-radius:16px;
+    background:rgba(255,255,255,0.03); border:1px solid var(--card-border);
+    max-width:640px; margin-left:auto; margin-right:auto;
+  }
+  .pkg-usage-head{ display:flex; align-items:center; justify-content:center; gap:8px; font-size:17px; font-weight:600; color:#fff; }
+  .pkg-usage-head svg{ width:16px; height:16px; color:#CC9149; }
+  .pkg-usage-head b{ color:#CC9149; }
+  .pkg-usage p{ margin-top:10px; color:var(--text-mute); font-size:14.5px; }
+  .pkg-cta{
+    display:inline-block; margin-top:44px; padding:18px 48px; border-radius:14px;
+    background:linear-gradient(135deg, #CC9149, #8a5a24);
+    color:#fff; font-weight:700; font-size:16px; text-decoration:none;
+    transition:transform .3s var(--ease), box-shadow .3s ease;
+  }
+  .pkg-cta:hover{ transform:translateY(-2px); box-shadow:0 14px 36px rgba(204,145,73,0.32); }
+  .pkg-footnote{ margin-top:18px; color:var(--text-mute); font-size:13px; }
+  @media (max-width:860px){
+    .pkg-card{ padding:44px 22px; }
+    .pkg-cols{ grid-template-columns:1fr; gap:36px; }
+    .pkg-title{ font-size:28px; }
+  }
+
+  /* ---------- video testimonials (Originkit "Coverflow Gallery", vanilla port) ---------- */
+  .testi-head{ text-align:center; max-width:640px; margin:0 auto 40px; }
+  .testi-head h2{ font-size:38px; letter-spacing:-0.02em; }
+  .coverflow-wrap{
+    position:relative; width:100%; max-width:900px; height:400px;
+    margin:0 auto;
+  }
+  .testi-caption{ text-align:center; margin-top:14px; }
+  .testi-caption .name{ color:#fff; font-weight:700; font-size:15px; }
+  .testi-caption .role{ color:var(--text-mute); font-size:13px; margin-top:2px; }
+  @media (max-width:860px){
+    .testi-head h2{ font-size:28px; }
+    .coverflow-wrap{ height:300px; }
+  }
+
+  /* ---------- founder / built ---------- */
+  .founder-block{
+    display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;
+    background:#0a0a0a; border:1px solid var(--card-border); border-radius:24px; padding:56px;
+  }
+  .founder-block .eyebrow{color:var(--text-mute); font-size:13px; letter-spacing:0.1em; text-transform:uppercase;}
+  .founder-block h3{font-size:28px; font-weight:500; margin-top:14px;}
+  .founder-block p{color:var(--text-dim); font-size:15px; margin-top:14px; line-height:1.6;}
+  .founder-block .scope{margin-top:22px; font-size:13px; color:var(--text-mute);}
+  .avatar-circle{
+    width:100%; max-width:360px; margin:0 auto; aspect-ratio:1; border-radius:50%;
+    background:radial-gradient(circle at 30% 20%, #333, #0a0a0a);
+    display:flex; align-items:center; justify-content:center;
+    font-size:64px; font-weight:500; color:rgba(255,255,255,0.25);
+    border:1px solid var(--card-border);
+    overflow:hidden;
+  }
+  .avatar-circle img{
+    width:100%; height:100%; object-fit:cover; object-position:50% 22%;
+    display:block;
+  }
+
+  /* ---------- faq ---------- */
+  .faq-item{border-top:1px solid rgba(255,255,255,0.1); padding:24px 0; cursor:pointer; transition:border-color .3s ease;}
+  .faq-item:hover{border-color:rgba(255,255,255,0.25);}
+  .faq-item:last-child{border-bottom:1px solid rgba(255,255,255,0.1);}
+  .faq-q{display:flex; justify-content:space-between; align-items:center; font-size:17px; font-weight:500;}
+  .faq-q .plus{color:var(--text-mute); font-size:20px; transition:transform .35s var(--ease), color .35s ease;}
+  .faq-item.open .plus{transform:rotate(45deg); color:var(--accent);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .45s var(--ease);}
+  .faq-item.open .faq-a{max-height:300px;}
+  .faq-a p{color:var(--text-dim); font-size:14.5px; padding-top:14px; line-height:1.6; max-width:640px;}
+
+  /* ---------- final cta ---------- */
+  .final-cta{
+    text-align:center; padding:96px 24px;
+    background:radial-gradient(ellipse 900px 480px at 50% 42%, rgba(160,160,160,0.28), rgba(0,0,0,0) 68%);
+  }
+  .final-cta h2{font-size:40px; font-weight:400; max-width:700px; margin:0 auto;}
+  .final-cta p{color:var(--text-mute); margin-top:16px;}
+  .final-cta .capture{margin:34px auto 0;}
+
+  /* ---------- cta email typewriter (Originkit "Type Sequence", vanilla port) ---------- */
+  .cta-typewriter{
+    display:flex; align-items:center; justify-content:center;
+    width:100%; margin-top:44px; user-select:none;
+  }
+
+  footer{padding:40px 40px 40px;}
+  .footer-grid{display:flex; justify-content:flex-end; flex-wrap:wrap; gap:40px;}
+  .footer-cols{display:flex; gap:64px; flex-wrap:wrap;}
+  .footer-col h5{font-size:12px; letter-spacing:0.1em; color:var(--text-mute); text-transform:uppercase; margin-bottom:14px;}
+  .footer-col a{display:block; color:var(--text-dim); font-size:14px; margin-bottom:10px;}
+  .footer-col a:hover{color:#fff;}
+
+  @media (max-width:860px){
+    .hero h1{font-size:38px;}
+    .hero-inner{flex-direction:column-reverse; text-align:center;}
+    .hero-copy{text-align:center;}
+    .bench-grid{flex-direction:column;}
+    .bench-left{text-align:center;}
+    .chat-frame{max-width:380px; margin:0 auto;}
+    .hero-copy p.sub{margin-left:auto; margin-right:auto;}
+    .hero-copy .mgrad-btn{margin-left:auto; margin-right:auto;}
+    .hero-visual{max-width:340px; margin:0 auto;}
+    .cta-typewriter{margin-top:28px;}
+    .founder-block{grid-template-columns:1fr;}
+    .stat-cards{grid-template-columns:1fr;}
+    .eyebrow-row, .cards-head{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="bh-logo" id="bh-logo"></div>
+    Work Artificial
+  </div>
+  <button class="btn-talk" onclick="focusFinalEmail('lets_talk')">Let's talk</button>
+</header>
+
+<!-- HERO (text left, Originkit Hero-28 universe-hand visual right) -->
+<section class="hero" style="padding-top:20px;">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow-marquee" id="hero-marquee" role="img" aria-label="The modern AI infrastructure for modern businesses"></div>
+      <h1>Built for your business. <span class="dim">Not the business next door.</span></h1>
+      <p class="sub"><span class="magnetic-pull" id="hero-magnetic-text">Forget generic automation.</span><br><br>Reclaim valuable human time. Introducing an intelligent infrastructure, purpose-built around your business and attending to enquiries, appointments, follow-ups and client relations with exceptional precision.</p>
+      <a href="#" class="mgrad-btn" id="hero-mgrad-btn" onclick="event.preventDefault(); focusFinalEmail('lets_talk');" aria-label="Automate Your Booking System">
+        <span class="mgrad-btn-border" aria-hidden="true">
+          <span class="mgrad-btn-ring mgrad-btn-ring-spin"></span>
+          <span class="mgrad-btn-ring mgrad-btn-ring-hover"></span>
+        </span>
+        <span class="mgrad-btn-label">Automate Your Booking System</span>
+      </a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-caption" id="hero-typewriter"></div>
+      <div class="uh-wrap" id="uh-wrap">
+        <div class="uh-blackhole" id="uh-blackhole"></div>
+        <div class="uh-hand-mask">
+          <img src="hand.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section style="padding-top:0;">
+  <div class="cards-head">
+    <div>
+      <h2>The new standard for business operations. <span class="dim">Your operations, elevated by intelligence.</span></h2>
+      <p>AIOS is built for salons without a full reception team. Engineers optional.</p>
+    </div>
+    <div class="nav-arrows">
+      <button onclick="scrollCards(-1)">&#8249;</button>
+      <button onclick="scrollCards(1)">&#8250;</button>
+    </div>
+  </div>
+  <div class="card-track-outer" id="card-track-outer">
+    <div class="card-track" id="card-track">
+
+      <div class="aios-card c1 reveal">
+        <div class="tag">Reception</div>
+        <div>
+          <h3>AI Receptionist</h3>
+          <p>Every call answered on the first ring, booked, confirmed, or rescheduled without your staff picking up the phone.</p>
+        </div>
+        <div class="stat"><span>Runs on</span><b>Voice AI, live 24/7</b></div>
+      </div>
+
+      <div class="aios-card c2 reveal">
+        <div class="tag">Scheduling</div>
+        <div>
+          <h3>Appointment Reminders</h3>
+          <p>Automatic reminders and one-tap rescheduling sent before every booking, so no-shows get caught before they cost you a chair.</p>
+        </div>
+        <div class="stat"><span>Built for</span><b>Beauty & hair salons</b></div>
+      </div>
+
+      <div class="aios-card c3 reveal">
+        <div class="tag">Reputation</div>
+        <div>
+          <h3>Review Automation</h3>
+          <p>Every happy client gets asked for a review. Unhappy ones get caught and flagged to you first, before Google sees them.</p>
+        </div>
+        <div class="stat"><span>Runs on</span><b>Automated review flows</b></div>
+      </div>
+
+      <div class="aios-card c4 reveal">
+        <div class="tag">Sales</div>
+        <div>
+          <h3>Lead Follow-Up</h3>
+          <p>Every inquiry qualified and followed up within minutes, logged automatically so no lead sits in a notebook.</p>
+        </div>
+        <div class="stat"><span>Built for</span><b>Inbound salon inquiries</b></div>
+      </div>
+
+      <div class="aios-card c5 reveal">
+        <div class="tag">Insights</div>
+        <div>
+          <h3>Reporting Dashboard</h3>
+          <p>Bookings, no-shows, missed calls, revenue booked. One screen you actually check every morning.</p>
+        </div>
+        <div class="stat"><span>Runs on</span><b>Live dashboard</b></div>
+      </div>
+
+      <div class="aios-card c6 reveal">
+        <div class="tag">Messaging</div>
+        <div>
+          <h3>WhatsApp + Instagram</h3>
+          <p>DMs handled with the same speed and tone as your front desk, day or night, in your client's language.</p>
+        </div>
+        <div class="stat"><span>Built for</span><b>WhatsApp & Instagram DMs</b></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section>
+  <div class="wrap">
+    <div class="bench-grid">
+      <div class="bench-left">
+        <div class="eyebrow-row reveal">
+          <h2>Purpose-built vs improvising. <span class="dim">What happens when the right system runs your front desk.</span></h2>
+        </div>
+
+        <div class="stat-cards">
+          <div class="stat-card reveal">
+            <div class="label">Coverage</div>
+            <div class="big">24/7</div>
+            <div class="sub2">Never closed</div>
+            <div class="note">Compared to a front desk that closes evenings, weekends, holidays.</div>
+          </div>
+          <div class="stat-card reveal">
+            <div class="label">Cost</div>
+            <div class="big">A fraction</div>
+            <div class="sub2">of one hire</div>
+            <div class="note">AIOS runs on a fixed monthly retainer, no salary, sick days, or training.</div>
+          </div>
+          <div class="stat-card reveal">
+            <div class="label">Consistency</div>
+            <div class="big">Same</div>
+            <div class="sub2">every single call</div>
+            <div class="note">No bad days, no forgotten follow-ups, no missed reminders.</div>
+          </div>
+        </div>
+        <p class="bench-footnote">Illustrative comparison based on typical missed-call and staffing patterns for Swiss local service businesses, not client-specific data.</p>
+      </div>
+
+      <div class="bench-right">
+        <div class="chat-frame reveal" id="chat-frame">
+          <div class="chat-list">
+            <div class="chat-row them">
+              <div class="chat-msg">
+                <span class="chat-time">10:14 AM</span>
+                <div class="chat-bubble">Hi, do you have any appointments available this Saturday?</div>
+              </div>
+            </div>
+            <div class="chat-row me">
+              <div class="chat-msg">
+                <span class="chat-time">10:15 AM</span>
+                <div class="chat-bubble">Absolutely. I have 11:30 AM, 2:00 PM, or 4:30 PM available. Which works best?</div>
+              </div>
+            </div>
+            <div class="chat-row them">
+              <div class="chat-msg">
+                <span class="chat-time">10:16 AM</span>
+                <div class="chat-bubble">2:00 PM please.</div>
+              </div>
+            </div>
+            <div class="chat-row me">
+              <div class="chat-msg">
+                <span class="chat-time">10:17 AM</span>
+                <div class="chat-bubble">Done. You're booked with Emma for a haircut at 2:00 PM. I've sent your confirmation :))</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <div class="wrap">
+    <div class="pkg-card-frame reveal" id="pkg-card-frame">
+      <div class="pkg-neon-host" id="pkg-neon-host"></div>
+      <div class="pkg-card">
+        <div class="pkg-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </div>
+        <h2 class="pkg-title">Fully Custom Implementation</h2>
+        <p class="pkg-subtitle">Every part of AIOS designed and configured specifically for your salon's front desk</p>
+
+        <div class="pkg-cols">
+          <div class="pkg-col">
+            <div class="pkg-col-head">
+              <span class="pkg-col-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+              </span>
+              <h3>Setup & Implementation</h3>
+            </div>
+            <ul class="pkg-checklist">
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Custom AI receptionist trained on your services, pricing and hours</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Google Calendar synced booking, per stylist</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Automated reminders and no-show recovery sequences</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>WhatsApp and Instagram DM automation</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Full onboarding, testing and go-live support</li>
+            </ul>
+          </div>
+          <div class="pkg-col">
+            <div class="pkg-col-head">
+              <span class="pkg-col-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="20" x2="12" y2="10"></line>
+                  <line x1="18" y1="20" x2="18" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="16"></line>
+                </svg>
+              </span>
+              <h3>Management & Analytics</h3>
+            </div>
+            <ul class="pkg-checklist">
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Live owner dashboard: bookings, no-shows, recovered revenue</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Automated review and reputation requests</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Monthly performance reporting</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Dedicated support and ongoing updates</li>
+              <li><span class="pkg-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Swiss compliance documentation included</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pkg-usage">
+          <div class="pkg-usage-head">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-13h-8l1-7z"></path></svg>
+            <span><b>Custom</b> call & message volume</span>
+          </div>
+          <p>Built around your salon's real call volume and busy season, not a generic tier.</p>
+        </div>
+
+        <a href="#" class="pkg-cta" onclick="event.preventDefault(); focusFinalEmail('book_demo');">Book a Demo</a>
+        <div class="pkg-footnote">Free consultation &middot; Tailored specifically for your salon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="wrap">
+    <div class="testi-head reveal">
+      <h2>Hear it straight from the chair.</h2>
+    </div>
+    <div class="coverflow-wrap reveal" id="testi-coverflow"></div>
+    <div class="testi-caption" id="testi-caption">
+      <div class="name" id="testi-caption-name"></div>
+      <div class="role" id="testi-caption-role"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER / BUILT -->
+<section>
+  <div class="wrap">
+    <div class="founder-block reveal">
+      <div>
+        <div class="eyebrow">Built by someone who's already done this</div>
+        <h3>Kash Iyer, Founder</h3>
+        <p>Working with business owners on AI and automation since October 2023. AIOS isn't built on a whiteboard and pitched cold. It's built from real conversations with owners about what breaks in their day-to-day, and what a phone, a calendar, and a set of leads actually need to run without someone babysitting them.</p>
+        <p class="scope">Live system · AI receptionist, reminders, review automation, reporting dashboard</p>
+      </div>
+      <div class="avatar-circle"><img src="founder.jpg" alt="Kash Iyer, founder of Work Artificial" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap" style="max-width:820px;">
+    <div class="eyebrow-row reveal">
+      <h2>Questions, answered.</h2>
+    </div>
+
+    <div class="faq-item open reveal">
+      <div class="faq-q"><span>What does Work Artificial build, exactly?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>AIOS: an AI receptionist, appointment reminders, review automation, lead follow-up, a reporting dashboard, and WhatsApp/Instagram messaging, scoped to how your salon actually books and runs.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q"><span>How fast do we go live?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Days, not months. You bring your booking flow and common call types; we build against them, test on real cases, and go live before you commit long-term.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q"><span>Do I need staff who understand tech?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>No. We build, run, and maintain the system. Your team keeps working the way they already do, the dashboard just tells them what happened.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q"><span>What does it cost compared to hiring?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>A fraction of a front-desk hire's monthly cost, and it doesn't need training, sick days, or holiday cover. Pure monthly retainer, no setup fee.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q"><span>What if it makes a mistake?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Complex or sensitive calls get flagged to you directly. You see every action the system takes, nothing irreversible happens without your visibility.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q"><span>How do you handle client data?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Built around Swiss FADP requirements: a recording-disclosure line, a data processing agreement, and clear data-handling terms from day one.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2 class="reveal">Your next client is calling right now. Who's picking up?</h2>
+  <p class="reveal">No setup fee. Book a 20-minute call and see the system live before you commit to anything.</p>
+  <form class="capture" style="margin-left:auto;margin-right:auto;" onsubmit="handleLeadSubmit(event, this);">
+    <input id="cta-email" type="email" placeholder="work@email.com" required>
+    <button type="submit">Get started</button>
+  </form>
+
+  <div class="cta-typewriter" id="cta-typewriter" aria-hidden="true"></div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#">About</a>
+        <a href="mailto:hello@workartificial.com">Work with us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+        <a href="terms-and-conditions.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <a href="mailto:hello@workartificial.com">Contact us</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  // ---------- lead capture -> Supabase ----------
+  // Every "Let's talk" / "Automate Your Booking System" click, every "Book a
+  // Demo" click, and any direct submission of the final-CTA email form all
+  // funnel through the same <form class="capture"> + #cta-email input. We
+  // just remember which button (if any) sent the visitor there, then log
+  // {source, email} to a Supabase table on submit. RLS on that table only
+  // grants the public "insert" — no anon read/update/delete — so this is
+  // safe to run entirely client-side with a publishable key.
+  const SUPABASE_URL = 'https://bpxeutvxterkfqmpbywm.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_eAmBluW_hvfJ-TWwFxnZ8Q_bLco4fqA';
+  const supabaseClient = window.supabase
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+    : null;
+
+  let leadSource = 'final_cta';
+  function setLeadSource(source){ leadSource = source; }
+
+  async function logLead(email, source){
+    if(!supabaseClient) return;
+    try{
+      await supabaseClient.from('leads').insert({
+        email: email,
+        source: source,
+        page_url: window.location.href,
+        user_agent: navigator.userAgent
+      });
+    } catch(err){
+      console.error('Lead logging failed:', err);
+    }
+  }
+
+  function handleLeadSubmit(event, form){
+    event.preventDefault();
+    const email = form.querySelector('#cta-email').value;
+    form.querySelector('button').textContent = "Got it, we'll reach out";
+    logLead(email, leadSource);
+    leadSource = 'final_cta'; // reset for the next visitor session on this page
+  }
+
+  // ---------- black hole logomark (ported from Originkit's BlackHole component) ----------
+  function initBlackHole(container, opts){
+    opts = Object.assign({
+      particleCount: 280,
+      colors: ['#ffffff','#ffffff','#ffffff','#ff0011'],
+      orbitSpeed: 7,
+      tilt: 17,
+      tiltSideway: 180,
+      trail: 50,
+      outerRadiusPct: 100,
+      pullSpeed: 0,
+      particleSizePx: 0.9,
+      voidRadiusRatio: 0.16,
+      voidXPct: 50,
+      voidYPct: 50,
+      // ---- extra tunables, all default to the original hardcoded values so
+      // existing callers (the header logomark) render identically unless
+      // they opt in by passing these explicitly ----
+      radiusBias: 2,            // exponent on the seed-radius random draw; higher = more concentrated near the void
+      verticalSpread: 0.9,      // multiplier on the height/3D-displacement range
+      verticalRadiusMix: 0,     // 0 = height range scales off voidRadius only (orig behavior); 1 = scales off outerRadius
+      verticalRadiusCurve: 0,   // 0 = flat height range for every particle; up to 1 = particles farther out drift higher/lower
+      brightnessMax: 1,         // alpha of the brightest (frontmost) particles
+      brightnessFalloff: 0.45,  // how much alpha drops for the farthest-back particles
+      brightnessFloor: 0.35,    // hard alpha floor
+      brightnessJitterMin: 1,   // per-particle persistent brightness multiplier is random in [this..1]; 1 = no jitter (orig behavior)
+      keplerExponent: 0.5,      // exponent on the inner/outer orbital-speed ratio; 0.5 = original sqrt falloff. Higher = stronger differential rotation (inner particles spin relatively faster than outer ones)
+      brightnessRadiusMix: 0    // 0 = alpha depends only on camera depth (orig behavior). >0 blends in extra dimming for particles farther out by orbital radius, so mid/inner stays brighter than the outer edge
+    }, opts || {});
+
+    const bg = document.createElement('canvas');
+    const fg = document.createElement('canvas');
+    bg.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%;';
+    fg.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;';
+    container.appendChild(bg);
+    container.appendChild(fg);
+
+    const ctx = bg.getContext('2d');
+    const fgCtx = fg.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const trailAlpha = Math.max(0.02, 1 - (opts.trail/50) * 0.98);
+
+    let W = 0, H = 0, voidRadius = 6, perspective = 140, particles = [];
+
+    function outerRad(){ return voidRadius + (opts.outerRadiusPct/100) * ((W/2) - voidRadius); }
+
+    // Height range for a particle at a given orbital radius. With
+    // verticalRadiusMix=0/verticalRadiusCurve=0 (the defaults) this reduces
+    // to the original flat "(voidRadius*0.9)" range. Raising verticalRadiusMix
+    // lets the range scale off the much bigger outer radius instead of the
+    // (now tiny) void radius, and verticalRadiusCurve makes particles farther
+    // from the void drift higher/lower than particles hugging the center.
+    function heightFor(radius, outer){
+      const basis = voidRadius*(1-opts.verticalRadiusMix) + outer*opts.verticalRadiusMix;
+      const radiusFrac = Math.max(0, Math.min(1, (radius - voidRadius) / Math.max(1, outer - voidRadius)));
+      const curveMul = (1-opts.verticalRadiusCurve) + opts.verticalRadiusCurve*radiusFrac;
+      return (Math.random()-0.5) * basis * opts.verticalSpread * curveMul;
+    }
+
+    function seed(){
+      const outer = outerRad();
+      particles = [];
+      for(let i=0; i<opts.particleCount; i++){
+        const radius = voidRadius + Math.pow(Math.random(),opts.radiusBias) * (outer - voidRadius);
+        particles.push({
+          angle: Math.random()*Math.PI*2,
+          radius,
+          height: heightFor(radius, outer),
+          speedOffset: 0.75 + Math.random()*0.5,
+          colorIdx: Math.floor(Math.random()*opts.colors.length),
+          brightness: opts.brightnessJitterMin + Math.random()*(1-opts.brightnessJitterMin)
+        });
+      }
+    }
+
+    function resize(){
+      const r = container.getBoundingClientRect();
+      W = r.width; H = r.height;
+      if(W === 0 || H === 0) return;
+      bg.width = W*dpr; bg.height = H*dpr;
+      fg.width = W*dpr; fg.height = H*dpr;
+      voidRadius = Math.max(2, W*opts.voidRadiusRatio);
+      perspective = W*3.2;
+      seed();
+    }
+
+    new ResizeObserver(resize).observe(container);
+    resize();
+
+    let last = performance.now();
+    function draw(now){
+      const dt = Math.min((now-last)/16.667, 3); last = now;
+      if(W > 0){
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        fgCtx.setTransform(dpr,0,0,dpr,0,0);
+        ctx.globalAlpha = 1; fgCtx.globalAlpha = 1;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = `rgba(0,0,0,${trailAlpha})`;
+        ctx.fillRect(0,0,W,H);
+        ctx.globalCompositeOperation = 'source-over';
+
+        fgCtx.globalCompositeOperation = 'destination-out';
+        fgCtx.fillStyle = `rgba(0,0,0,${trailAlpha})`;
+        fgCtx.fillRect(0,0,W,H);
+        fgCtx.globalCompositeOperation = 'source-over';
+
+        const outer = outerRad();
+        const voidCx = (opts.voidXPct/100)*W, voidCy = (opts.voidYPct/100)*H;
+        const tiltRad = (opts.tilt*Math.PI)/180;
+        const tiltSideRad = (opts.tiltSideway*Math.PI)/180;
+        const bgPts = [], fgPts = [];
+
+        for(let i=0; i<particles.length; i++){
+          const pt = particles[i];
+          const speedFactor = Math.pow(voidRadius/Math.max(pt.radius, voidRadius*0.4), opts.keplerExponent);
+          pt.angle += opts.orbitSpeed*speedFactor*pt.speedOffset*0.012*dt;
+          pt.radius -= (opts.pullSpeed/2)*speedFactor*pt.speedOffset*dt;
+          if(pt.radius < voidRadius){
+            pt.radius = voidRadius + 0.7*(outer-voidRadius) + Math.random()*0.3*(outer-voidRadius);
+            pt.angle = Math.random()*Math.PI*2;
+            pt.height = heightFor(pt.radius, outer);
+            pt.brightness = opts.brightnessJitterMin + Math.random()*(1-opts.brightnessJitterMin);
+            continue;
+          }
+          const cosA = Math.cos(pt.angle), sinA = Math.sin(pt.angle);
+          const xB = pt.radius*cosA, yB = pt.height, zB = pt.radius*sinA;
+          const x1 = xB, y1 = yB*Math.cos(tiltRad)+zB*Math.sin(tiltRad), z1 = -yB*Math.sin(tiltRad)+zB*Math.cos(tiltRad);
+          const x3 = x1*Math.cos(tiltSideRad)-y1*Math.sin(tiltSideRad);
+          const y3 = x1*Math.sin(tiltSideRad)+y1*Math.cos(tiltSideRad);
+          const z3 = z1;
+          const scale = perspective/(perspective+z3);
+          const px = voidCx + x3*scale, py = voidCy + y3*scale;
+          if(px < -10 || px > W+10 || py < -10 || py > H+10) continue;
+          const size = Math.max(0.3, opts.particleSizePx*scale);
+          const depthFactor = (z3+outer)/(2*outer);
+          const radiusFrac = Math.max(0, Math.min(1, (pt.radius - voidRadius) / Math.max(1, outer - voidRadius)));
+          const radiusBrightness = 1 - opts.brightnessRadiusMix*radiusFrac;
+          const alpha = Math.max(opts.brightnessFloor, opts.brightnessMax - depthFactor*opts.brightnessFalloff) * pt.brightness * radiusBrightness;
+          const color = opts.colors[pt.colorIdx % opts.colors.length];
+          const p = {x:px, y:py, size, alpha, z:z3, color};
+          if(z3 >= 0) bgPts.push(p); else fgPts.push(p);
+        }
+        bgPts.sort((a,b)=>b.z-a.z);
+        fgPts.sort((a,b)=>b.z-a.z);
+
+        for(const p of bgPts){ ctx.globalAlpha=p.alpha; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill(); }
+        ctx.globalAlpha = 1;
+
+        const grad = ctx.createRadialGradient(voidCx-voidRadius*0.25, voidCy-voidRadius*0.3, voidRadius*0.05, voidCx, voidCy, voidRadius);
+        grad.addColorStop(0,'rgba(10,10,10,1)');
+        grad.addColorStop(0.65,'rgba(0,0,0,1)');
+        grad.addColorStop(0.92,'rgba(20,20,20,1)');
+        grad.addColorStop(1,'rgba(20,20,20,0.9)');
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(voidCx,voidCy,voidRadius,0,Math.PI*2); ctx.fill();
+
+        const rim = ctx.createRadialGradient(voidCx,voidCy,voidRadius*0.88,voidCx,voidCy,voidRadius*1.05);
+        rim.addColorStop(0,'rgba(255,255,255,0)');
+        rim.addColorStop(0.6,'rgba(255,80,80,0.10)');
+        rim.addColorStop(0.85,'rgba(255,80,80,0.16)');
+        rim.addColorStop(1,'rgba(255,80,80,0)');
+        ctx.fillStyle = rim;
+        ctx.beginPath(); ctx.arc(voidCx,voidCy,voidRadius*1.05,0,Math.PI*2); ctx.fill();
+
+        for(const p of fgPts){ fgCtx.globalAlpha=p.alpha; fgCtx.fillStyle=p.color; fgCtx.beginPath(); fgCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fgCtx.fill(); }
+        fgCtx.globalAlpha = 1;
+      }
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  }
+  const bhLogoEl = document.getElementById('bh-logo');
+  if(bhLogoEl) initBlackHole(bhLogoEl);
+
+  // Universe-hand hero visual (BlackHole.tsx defaults, overridden exactly as
+  // UniverseHandAnimation.tsx does: tilt 12, tiltSideway 158, outerRadius 75,
+  // voidRadius scaled at NATIVE_VOID(35)/NATIVE_WIDTH(707) of container width).
+  // voidX/voidY nudged off the default 50/50 to sit on this specific hand.png's
+  // fingertip (measured from the actual image, not the 50/50 the original
+  // reference hand happened to use).
+  const uhBlackholeEl = document.getElementById('uh-blackhole');
+  if(uhBlackholeEl) initBlackHole(uhBlackholeEl, {
+    particleCount: 1300,       // unchanged
+    colors: ['#ffffff','#ffffff','#ffffff','#e2e4ec'],  // unchanged
+    orbitSpeed: 5.2,           // moderate bump from 4 -> clearly rotating, not a static ellipse
+    tilt: 12,
+    tiltSideway: 158,
+    trail: 44,                 // a bit more persistent than 38 so the trail reads as a direction of motion
+    outerRadiusPct: 96,        // unchanged
+    pullSpeed: 0,
+    particleSizePx: 0.55,      // unchanged
+    voidRadiusRatio: 35/707,   // unchanged -> black hole stays exactly as visible as before
+    voidXPct: 57,
+    voidYPct: 56,
+    radiusBias: 1.8,           // unchanged
+    verticalSpread: 1.15,      // unchanged
+    verticalRadiusMix: 0.15,   // unchanged
+    verticalRadiusCurve: 0.3,  // unchanged
+    keplerExponent: 0.62,      // steepens the inner/outer speed curve -> clear differential rotation (inner spins faster than outer)
+    brightnessRadiusMix: 0.3,  // extra dimming toward the outer edge by orbital radius, on top of depth -> outer stays relatively subtle even brighter overall
+    brightnessMax: 1,          // core/mid brightness raised ~18% (was 0.85) -> clearly brighter without returning to the flat overexposed original
+    brightnessFalloff: 0.5,    // slightly less steep than 0.55 since brightnessRadiusMix now also handles outer dimming
+    brightnessFloor: 0.24,     // small bump so even the dimmest particles read a touch brighter
+    brightnessJitterMin: 0.8   // narrower/brighter per-particle variance (was 0.75)
+  });
+
+  function focusFinalEmail(source){
+    if(source) setLeadSource(source);
+    const el = document.getElementById('cta-email');
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(()=>el.focus(), 450);
+  }
+
+  // card carousel
+  function scrollCards(dir){
+    document.getElementById('card-track-outer').scrollBy({left: dir*360, behavior:'smooth'});
+  }
+
+  // generic scroll reveal for cards, stats, steps, faq, etc.
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('revealed');
+        revealIo.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.15, rootMargin:'0px 0px -60px 0px'});
+  revealEls.forEach((el,i)=>{
+    el.style.transitionDelay = Math.min(i%4,3)*0.06 + 's';
+    revealIo.observe(el);
+  });
+
+  // ---------- spin cursor (Originkit-style, vanilla port, page-wide) ----------
+  // Ported from the React MagicCursor component: a velocity-driven arrow
+  // that follows the pointer, tilts into its direction of travel, and
+  // stretches/squashes with speed. Runs against the full viewport (not one
+  // frame) so it replaces the native cursor everywhere on the site.
+  function initSpinCursor(opts){
+    opts = Object.assign({
+      label: false,
+      labelText: 'HOVER AROUND',
+      labelColor: '#FFFFFF',
+      fillColor: '#FFFFFF',
+      cursorSize: 36,
+      enableStretch: true,
+      enableGlow: true,
+      glowColor: '#ff0011',
+      glowIntensity: 45
+    }, opts || {});
+
+    const CLICK_EFFECT = true;
+    const GLOW_CORE_PX = 6;
+    const GLOW_BLOOM_PX = 18;
+    const FOLLOW_TAU = 0.02;
+    const VELOCITY_TAU = 0.05;
+    const ARROW = 'M0,0 L18,11 L9,13 L6,21 Z';
+    const ARROW_W = 18, ARROW_H = 21;
+    const ARROW_REST = Math.atan2(-15, -12);
+
+    function angleDelta(from, to){
+      let d = (to - from) % (Math.PI * 2);
+      if(d > Math.PI) d -= Math.PI * 2;
+      if(d < -Math.PI) d += Math.PI * 2;
+      return d;
+    }
+
+    let glowFilter = 'none';
+    if(opts.enableGlow){
+      const t = Math.max(0, Math.min(100, opts.glowIntensity)) / 100;
+      const core = (GLOW_CORE_PX * t).toFixed(2);
+      const bloom = (GLOW_BLOOM_PX * t).toFixed(2);
+      glowFilter = `drop-shadow(0 0 ${core}px ${opts.glowColor}) drop-shadow(0 0 ${bloom}px ${opts.glowColor})`;
+    }
+
+    const frameEl = document.createElement('div');
+    frameEl.style.cssText = 'position:fixed; inset:0; width:100vw; height:100vh; overflow:hidden; pointer-events:none; z-index:9999;';
+    document.body.appendChild(frameEl);
+
+    if(opts.label){
+      const labelNode = document.createElement('div');
+      labelNode.textContent = opts.labelText;
+      labelNode.style.cssText = `position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); white-space:pre; pointer-events:none; user-select:none; font-family:Inter,sans-serif; font-weight:600; font-size:48px; line-height:1.5em; letter-spacing:0em; text-align:left; color:${opts.labelColor};`;
+      frameEl.appendChild(labelNode);
+    }
+
+    const host = document.createElement('div');
+    host.style.cssText = `position:absolute; top:0; left:0; transform-origin:0 0; opacity:0; pointer-events:none; will-change:transform; filter:${glowFilter};`;
+    host.innerHTML = `<svg width="${ARROW_W}" height="${ARROW_H}" viewBox="0 0 ${ARROW_W} ${ARROW_H}" style="display:block; overflow:visible;" aria-hidden="true"><path d="${ARROW}" fill="${opts.fillColor}" stroke="rgba(0,0,0,0.18)" stroke-width="0.6" stroke-linejoin="round"/></svg>`;
+    frameEl.appendChild(host);
+
+    const cursorStyleTag = document.createElement('style');
+    cursorStyleTag.textContent = '*, a, button, [role="button"] { cursor: none !important; }';
+    let cursorHidden = false;
+    function hideNativeCursor(hide){
+      if(hide === cursorHidden) return;
+      cursorHidden = hide;
+      if(hide) document.head.appendChild(cursorStyleTag);
+      else cursorStyleTag.remove();
+    }
+
+    let targetX = -9999, targetY = -9999, x = targetX, y = targetY;
+    let vx = 0, vy = 0, angle = 0, pressed = 0, down = false, seen = false, inside = false;
+
+    function onMove(e){
+      targetX = e.clientX; targetY = e.clientY;
+      hideNativeCursor(true);
+      if(!seen || !inside){ x = targetX; y = targetY; vx = 0; vy = 0; seen = true; }
+      inside = true;
+    }
+    function onWindowLeave(){ inside = false; hideNativeCursor(false); }
+    function onDown(){ down = true; }
+    function onUp(){ down = false; }
+    window.addEventListener('pointermove', onMove, {passive:true});
+    document.documentElement.addEventListener('pointerleave', onWindowLeave);
+    window.addEventListener('pointerdown', onDown, {passive:true});
+    window.addEventListener('pointerup', onUp, {passive:true});
+
+    let last = performance.now();
+    function frame(now){
+      const dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
+      last = now;
+
+      const followEase = 1 - Math.exp(-dt / FOLLOW_TAU);
+      const prevX = x, prevY = y;
+      x += (targetX - x) * followEase;
+      y += (targetY - y) * followEase;
+      if(dt > 0){
+        const vEase = 1 - Math.exp(-dt / VELOCITY_TAU);
+        vx += ((x - prevX) / dt - vx) * vEase;
+        vy += ((y - prevY) / dt - vy) * vEase;
+      }
+
+      const speed = Math.hypot(vx, vy);
+      if(speed > 40){
+        const target = Math.atan2(vy, vx) - ARROW_REST;
+        angle += angleDelta(angle, target) * (1 - Math.exp(-dt / 0.06));
+      }
+
+      const stretch = opts.enableStretch ? 1 + Math.min(speed / 3000, 0.35) : 1;
+      const squash = opts.enableStretch ? 1 / Math.sqrt(stretch) : 1;
+      const clickTarget = CLICK_EFFECT && down ? 1 : 0;
+      pressed += (clickTarget - pressed) * (1 - Math.exp(-dt / 0.05));
+      const press = 1 - pressed * 0.2;
+      const s = (opts.cursorSize / ARROW_H) * press;
+
+      host.style.opacity = seen && inside ? '1' : '0';
+      host.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad) scale(${s * squash}, ${s * stretch})`;
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  initSpinCursor({
+    fillColor: '#FFFFFF',
+    cursorSize: 21,
+    enableStretch: true,
+    enableGlow: true,
+    glowColor: '#ff0011',
+    glowIntensity: 45,
+    label: false
+  });
+
+  // ---------- curved/scrolling marquee (Originkit-style, vanilla port) ----------
+  // SVG text-on-a-path loop: a hidden <text> measures the string's rendered
+  // width, then N <tspan>s are laid out end-to-end along an (almost flat,
+  // curveAmount is tiny here) path and their x offsets are advanced every
+  // frame, wrapping around once a copy scrolls fully past. Optional pointer
+  // drag nudges the same velocity so a swipe flings the text and it eases
+  // back to its steady drift, matching the original component.
+  function initCurvedMarquee(container, opts){
+    opts = Object.assign({
+      text: 'Originkit',
+      fontFamily: 'Inter, sans-serif',
+      fontWeight: 700,
+      fontSize: 52,        // viewBox units, not screen px — scales with the container
+      letterSpacing: '1px',
+      color: '#ffffff',
+      direction: 'left',
+      baseVelocity: 35,    // 0-100
+      curveAmount: -1,     // viewBox units of vertical bow in the path
+      gap: 35,
+      draggable: true,
+      dragIntensity: 10,
+      fade: true,
+      fadePercent: 12,
+      viewBoxW: 1440,
+      viewBoxH: 120
+    }, opts || {});
+
+    const MAX_SPEED = 800;
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const uid = 'cm' + Math.random().toString(36).slice(2, 9);
+    const pathId = 'curve-' + uid, fadeGradId = 'fadeGrad-' + uid, fadeMaskId = 'fadeMask-' + uid;
+
+    const cy = opts.viewBoxH / 2;
+    const pathD = `M-200,${cy} Q${opts.viewBoxW / 2},${cy + opts.curveAmount} ${opts.viewBoxW + 200},${cy}`;
+
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${opts.viewBoxW} ${opts.viewBoxH}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.style.cssText = 'display:block; width:100%; height:100%; overflow:visible;';
+    svg.style.fill = opts.color;
+    svg.style.fontFamily = opts.fontFamily;
+
+    const defs = document.createElementNS(svgNS, 'defs');
+    const path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('id', pathId);
+    path.setAttribute('d', pathD);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'transparent');
+    defs.appendChild(path);
+
+    if(opts.fade){
+      const grad = document.createElementNS(svgNS, 'linearGradient');
+      grad.setAttribute('id', fadeGradId);
+      grad.setAttribute('x1', '0%'); grad.setAttribute('y1', '0%');
+      grad.setAttribute('x2', '100%'); grad.setAttribute('y2', '0%');
+      [[0,0],[opts.fadePercent,1],[100-opts.fadePercent,1],[100,0]].forEach(([off,op])=>{
+        const s = document.createElementNS(svgNS, 'stop');
+        s.setAttribute('offset', off + '%');
+        s.setAttribute('stop-color', 'white');
+        s.setAttribute('stop-opacity', op);
+        grad.appendChild(s);
+      });
+      defs.appendChild(grad);
+      const mask = document.createElementNS(svgNS, 'mask');
+      mask.setAttribute('id', fadeMaskId);
+      const rect = document.createElementNS(svgNS, 'rect');
+      rect.setAttribute('width', '100%'); rect.setAttribute('height', '100%');
+      rect.setAttribute('fill', `url(#${fadeGradId})`);
+      mask.appendChild(rect);
+      defs.appendChild(mask);
+    }
+    svg.appendChild(defs);
+
+    const measure = document.createElementNS(svgNS, 'text');
+    measure.setAttribute('xml:space', 'preserve');
+    measure.style.cssText = 'visibility:hidden; opacity:0; pointer-events:none;';
+    measure.style.fontSize = opts.fontSize;
+    measure.style.fontWeight = opts.fontWeight;
+    measure.style.letterSpacing = opts.letterSpacing;
+    measure.textContent = opts.text.trim();
+    svg.appendChild(measure);
+
+    container.innerHTML = '';
+    container.appendChild(svg);
+
+    let textWidth = 0;
+    try{ textWidth = measure.getComputedTextLength(); }catch(e){}
+    const gapPx = (opts.gap + 1) * 10;
+    const spacing = textWidth + gapPx;
+    if(spacing <= 0) return;
+
+    let pathLength = 0;
+    try{ pathLength = path.getTotalLength(); }catch(e){}
+    const repeats = Math.max(1, Math.ceil(pathLength / spacing) + 2);
+
+    const text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('xml:space', 'preserve');
+    text.style.fontWeight = opts.fontWeight;
+    text.style.fontSize = opts.fontSize;
+    text.style.letterSpacing = opts.letterSpacing;
+    if(opts.fade) text.setAttribute('mask', `url(#${fadeMaskId})`);
+    if(opts.draggable) text.style.cursor = 'grab';
+
+    const textPath = document.createElementNS(svgNS, 'textPath');
+    textPath.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#' + pathId);
+    textPath.setAttribute('href', '#' + pathId);
+    textPath.setAttribute('xml:space', 'preserve');
+
+    const tspans = [];
+    for(let i = 0; i < repeats; i++){
+      const tspan = document.createElementNS(svgNS, 'tspan');
+      tspan.setAttribute('x', i * spacing);
+      tspan.textContent = opts.text.trim();
+      textPath.appendChild(tspan);
+      tspans.push(tspan);
+    }
+    text.appendChild(textPath);
+    svg.appendChild(text);
+
+    const effectiveVelocity = (opts.baseVelocity / 100) * MAX_SPEED;
+    const actualBaseVelocity = opts.direction === 'left' ? -effectiveVelocity : effectiveVelocity;
+    const dragFactor = opts.dragIntensity * 0.1;
+
+    let isDragging = false, dragVelocity = 0, lastPointer = {x:0, y:0};
+
+    if(opts.draggable){
+      text.addEventListener('pointerdown', (e)=>{
+        try{ text.setPointerCapture(e.pointerId); }catch(err){}
+        text.style.cursor = 'grabbing';
+        isDragging = true; lastPointer = {x:e.clientX, y:e.clientY}; dragVelocity = 0;
+      });
+      text.addEventListener('pointermove', (e)=>{
+        if(!isDragging) return;
+        const dx = e.clientX - lastPointer.x;
+        dragVelocity = dx * dragFactor;
+        lastPointer = {x:e.clientX, y:e.clientY};
+      });
+      const stopDrag = (e)=>{
+        if(!isDragging) return;
+        try{ text.releasePointerCapture(e.pointerId); }catch(err){}
+        text.style.cursor = 'grab';
+        isDragging = false;
+      };
+      text.addEventListener('pointerup', stopDrag);
+      text.addEventListener('pointercancel', stopDrag);
+    }
+
+    let last = performance.now();
+    function frame(now){
+      const delta = now - last; last = now;
+      const maxX = (tspans.length - 1) * spacing;
+      if(isDragging){
+        for(const tspan of tspans){
+          let x = parseFloat(tspan.getAttribute('x') || '0');
+          x += dragVelocity;
+          if(x < -spacing) x = maxX;
+          if(x > maxX) x = -spacing;
+          tspan.setAttribute('x', x);
+        }
+        dragVelocity *= 0.9;
+        if(Math.abs(dragVelocity) < 0.01) dragVelocity = 0;
+      } else {
+        let moveBy = actualBaseVelocity * (delta / 1000);
+        moveBy += dragVelocity;
+        if(Math.abs(dragVelocity) > 0.01) dragVelocity *= 0.96; else dragVelocity = 0;
+        for(const tspan of tspans){
+          let x = parseFloat(tspan.getAttribute('x') || '0');
+          x += moveBy;
+          if(x < -spacing) x = maxX;
+          if(x > maxX) x = -spacing;
+          tspan.setAttribute('x', x);
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  const heroMarqueeEl = document.getElementById('hero-marquee');
+  if(heroMarqueeEl) initCurvedMarquee(heroMarqueeEl, {
+    text: 'THE MODERN AI INFRASTRUCTURE FOR MODERN BUSINESSES',
+    fontFamily: 'Switzer, sans-serif',
+    fontWeight: 700,
+    fontSize: 68,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    direction: 'left',
+    baseVelocity: 35,
+    curveAmount: -1,
+    gap: 35,
+    draggable: true,
+    dragIntensity: 10,
+    fade: true,
+    fadePercent: 12,
+    viewBoxW: 1440,
+    viewBoxH: 150
+  });
+
+  // ---------- encrypt button (Originkit-style scramble + light sweep, vanilla port) ----------
+  // On hover: a text-decrypt effect (junk characters lock in left-to-right
+  // into the real label) plus a repeating gradient band that sweeps down
+  // behind the text. Width is reserved by an invisible ghost copy of the
+  // label so the button never resizes while the scramble is running.
+  // ---------- neon border (lightweight CSS-transform version) ----------
+  // The original Originkit port recomputed a ~26-stop conic-gradient string
+  // on 10 DOM elements every single animation frame via requestAnimationFrame
+  // (to trace the exact rectangular perimeter with corner-aware easing), plus
+  // several large blurred/additively-blended layers — correct, but heavy
+  // enough to visibly lag. This version gets the same "traveling neon light"
+  // read for a fraction of the cost: the gradient is built ONCE, and the only
+  // thing that animates is a CSS transform:rotate() on a couple of layers,
+  // which the browser can run on the compositor thread with no per-frame
+  // JS or repaint at all. Two masked "ring" wrappers (glow + crisp core) sit
+  // fixed to the card's real border (computed once on resize); a rotating
+  // gradient child sits inside each and the wrapper's mask clips it down to
+  // just the border band. Trade-off: the comet moves at a constant angular
+  // rate around the card's center rather than gliding the true perimeter
+  // path, so on a very wide card it reads slightly faster along the top/
+  // bottom edges than the sides — visually minor, and worth it for the perf.
+  function initNeonBorderLite(rootEl, opts){
+    opts = Object.assign({
+      color: '#CC9149',
+      glowColor: '#ffdcb2',
+      rounded: 24,       // 0-100, radius as a % of min(w,h)/2
+      thickness: 3,      // crisp core ring, px
+      glowThickness: 22, // soft glow ring, px
+      blur: 18,
+      duration: 7        // seconds per full rotation
+    }, opts || {});
+
+    rootEl.style.cssText = 'position:absolute; inset:0; pointer-events:none; overflow:hidden;';
+
+    const gradient = `conic-gradient(from 0deg,` +
+      `transparent 0deg, rgba(0,0,0,0) 10deg, ${opts.color}d9 35deg, ${opts.glowColor} 50deg, ${opts.color}d9 65deg, rgba(0,0,0,0) 90deg,` +
+      `transparent 170deg, rgba(0,0,0,0) 190deg, ${opts.color}d9 215deg, ${opts.glowColor} 230deg, ${opts.color}d9 245deg, rgba(0,0,0,0) 270deg,` +
+      `transparent 360deg)`;
+
+    function buildRing(padPx, extraStyle){
+      const wrap = document.createElement('div');
+      wrap.style.position = 'absolute';
+      wrap.style.boxSizing = 'border-box';
+      wrap.style.padding = padPx + 'px';
+      wrap.style.maskImage = 'linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)';
+      wrap.style.maskClip = 'content-box, border-box';
+      wrap.style.maskComposite = 'exclude';
+      wrap.style.webkitMaskImage = 'linear-gradient(#fff 0 0), linear-gradient(#fff 0 0)';
+      wrap.style.webkitMaskClip = 'content-box, border-box';
+      wrap.style.webkitMaskComposite = 'xor';
+      if(extraStyle) Object.assign(wrap.style, extraStyle);
+      const spin = document.createElement('div');
+      spin.style.cssText = `position:absolute; top:50%; left:50%; width:220%; height:220%; margin-top:-110%; margin-left:-110%; background:${gradient}; animation:pkgNeonSpin ${opts.duration}s linear infinite; will-change:transform;`;
+      wrap.appendChild(spin);
+      return wrap;
+    }
+
+    const glowRing = buildRing(opts.glowThickness, {filter:`blur(${opts.blur}px)`, opacity:'0.85', mixBlendMode:'screen'});
+    const coreRing = buildRing(opts.thickness, {opacity:'1'});
+    rootEl.appendChild(glowRing);
+    rootEl.appendChild(coreRing);
+
+    function layout(){
+      const r = rootEl.getBoundingClientRect();
+      const radius = (Math.max(0, Math.min(100, opts.rounded)) / 100) * (Math.min(r.width, r.height) / 2);
+      [[glowRing, opts.glowThickness], [coreRing, opts.thickness]].forEach(pair=>{
+        const el = pair[0], pad = pair[1];
+        el.style.inset = (-pad) + 'px';
+        el.style.borderRadius = radius > 0 ? (radius + pad) + 'px' : '0';
+      });
+    }
+    if(typeof ResizeObserver !== 'undefined') new ResizeObserver(layout).observe(rootEl);
+    layout();
+  }
+  const pkgNeonHost = document.getElementById('pkg-neon-host');
+  if(pkgNeonHost) initNeonBorderLite(pkgNeonHost, {
+    color: '#CC9149',
+    glowColor: '#ffdcb2',
+    rounded: 9,
+    thickness: 3,
+    glowThickness: 22,
+    blur: 18,
+    duration: 7
+  });
+
+  // ---------- magnetic pull / text gather (Originkit-style, vanilla port) ----------
+  // Splits text into per-character spans, scatters each to a random offset
+  // + rotation + zero opacity, then transitions every span back to its
+  // resting position with a small per-character stagger, so the phrase
+  // looks like it's gathering itself together. Scatter distance is scaled
+  // down from the source component's defaults (which assumed a 120px
+  // display headline) to suit this 18px paragraph text.
+  function initMagneticPull(el, opts){
+    opts = Object.assign({
+      color: '#ffffff',
+      startRotation: 40,
+      startOpacity: 0,
+      duration: 1,
+      delay: 0,
+      stagger: 0.02,
+      scatterX: 26,
+      scatterY: 26
+    }, opts || {});
+
+    const text = el.textContent;
+    el.textContent = '';
+    el.style.color = opts.color;
+    el.style.display = 'inline-block';
+
+    const chars = [];
+    for(const ch of text){
+      const span = document.createElement('span');
+      span.textContent = ch === ' ' ? ' ' : ch;
+      span.style.display = 'inline-block';
+      span.style.willChange = 'transform, opacity';
+      el.appendChild(span);
+      chars.push(span);
+    }
+
+    return function play(){
+      chars.forEach((span, i)=>{
+        const dx = (Math.random()*2-1)*opts.scatterX;
+        const dy = (Math.random()*2-1)*opts.scatterY;
+        const rot = (Math.random()*2-1)*opts.startRotation;
+        span.style.transition = 'none';
+        span.style.opacity = String(opts.startOpacity/100);
+        span.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+        void span.offsetWidth;
+        const d = opts.delay + i*opts.stagger;
+        span.style.transition = `transform ${opts.duration}s var(--ease) ${d}s, opacity ${opts.duration}s var(--ease) ${d}s`;
+        span.style.opacity = '1';
+        span.style.transform = 'translate(0,0) rotate(0deg)';
+      });
+    };
+  }
+  const heroMagneticEl = document.getElementById('hero-magnetic-text');
+  if(heroMagneticEl){
+    const playMagnetic = initMagneticPull(heroMagneticEl, {
+      color: '#ffffff',
+      startRotation: 40,
+      startOpacity: 0,
+      duration: 1,
+      delay: 0,
+      stagger: 0.02,
+      scatterX: 26,
+      scatterY: 26
+    });
+    setTimeout(playMagnetic, 260);
+  }
+
+  // ---------- typewriter (Originkit-style, vanilla port) ----------
+  // Recursive setTimeout state machine, ported from the same type/hold/
+  // delete/loop logic as the source: types a word, holds, deletes it,
+  // moves to the next string in the list, and loops forever. A blinking
+  // cursor sits after the typed text.
+  function initTypewriter(container, opts){
+    opts = Object.assign({
+      texts: ['Interfaces','Experiences','Interactions','Products'],
+      prefix: '',
+      color: '#ffffff',
+      typedColor: '#ffffff',
+      cursorColor: '',
+      cursorChar: '_',
+      showCursor: true,
+      hideCursorOnType: false,
+      typeDelayMs: 70,
+      holdMs: 1500,
+      deleteDelayMs: 100,
+      fontFamily: 'Inter, sans-serif',
+      fontSize: '14px',
+      fontWeight: 400,
+      lineHeight: '1.4em',
+      letterSpacing: '-0.025em',
+      textAlign: 'center',
+      cursorMode: 'char',   // 'char' (blinking text glyph) or 'block' (solid bar, Type-Sequence style)
+      cursorWidth: 5,
+      cursorHeightPx: 20,
+      cursorBorderColor: ''
+    }, opts || {});
+
+    const list = (opts.texts || []).filter(t => typeof t === 'string' && t.length);
+    if(!list.length) return;
+
+    container.style.cssText += `display:flex; align-items:center; justify-content:${opts.textAlign === 'center' ? 'center' : 'flex-start'}; width:100%;`;
+    const inner = document.createElement('div');
+    inner.style.cssText = `display:inline; white-space:pre-wrap; letter-spacing:${opts.letterSpacing}; font-family:${opts.fontFamily}; font-size:${opts.fontSize}; font-weight:${opts.fontWeight}; line-height:${opts.lineHeight}; color:${opts.color}; text-align:${opts.textAlign};`;
+
+    const prefixSpan = document.createElement('span');
+    prefixSpan.textContent = opts.prefix || '';
+    inner.appendChild(prefixSpan);
+
+    const typedSpan = document.createElement('span');
+    typedSpan.style.color = opts.typedColor;
+    inner.appendChild(typedSpan);
+
+    let cursorSpan = null;
+    if(opts.showCursor){
+      cursorSpan = document.createElement('span');
+      if(opts.cursorMode === 'block'){
+        cursorSpan.textContent = '';
+        cursorSpan.style.cssText = `display:inline-block; box-sizing:border-box; width:${opts.cursorWidth}px; height:${opts.cursorHeightPx}px; margin-left:0.2em; vertical-align:-0.15em; background:${opts.cursorColor || opts.typedColor}; border:${opts.cursorBorderColor ? '1.5px solid '+opts.cursorBorderColor : 'none'}; border-radius:1px; animation:twBlink 0.82s steps(1) infinite;`;
+      } else {
+        cursorSpan.textContent = opts.cursorChar;
+        cursorSpan.style.cssText = `color:${opts.cursorColor || opts.typedColor}; margin-left:0.25rem; animation:twBlink 0.82s steps(1) infinite;`;
+      }
+      inner.appendChild(cursorSpan);
+    }
+
+    container.appendChild(inner);
+
+    let currentIndex = 0, isDeleting = false, currentTextIndex = 0, displayText = '';
+
+    function render(){
+      typedSpan.textContent = displayText;
+      if(cursorSpan){
+        const activelyTyping = isDeleting || (currentIndex > 0 && currentIndex < (list[currentTextIndex] || '').length);
+        cursorSpan.style.visibility = (opts.hideCursorOnType && activelyTyping) ? 'hidden' : 'visible';
+      }
+    }
+
+    function tick(){
+      const currentText = list[currentTextIndex] || '';
+      if(isDeleting){
+        if(displayText === ''){
+          isDeleting = false;
+          currentTextIndex = (currentTextIndex + 1) % list.length;
+          currentIndex = 0;
+          render();
+          setTimeout(tick, opts.holdMs);
+        } else {
+          displayText = displayText.slice(0, -1);
+          render();
+          setTimeout(tick, opts.deleteDelayMs);
+        }
+      } else {
+        if(currentIndex < currentText.length){
+          displayText += currentText[currentIndex];
+          currentIndex++;
+          render();
+          setTimeout(tick, opts.typeDelayMs);
+        } else if(list.length > 1){
+          render();
+          setTimeout(()=>{ isDeleting = true; tick(); }, opts.holdMs);
+        } else {
+          render();
+        }
+      }
+    }
+    render();
+    setTimeout(tick, opts.typeDelayMs);
+  }
+  const heroTypewriterEl = document.getElementById('hero-typewriter');
+  if(heroTypewriterEl) initTypewriter(heroTypewriterEl, {
+    texts: ['Intelligence', 'infrastructure', 'operations'],
+    prefix: 'The future of your operations. At your fingertips. ',
+    color: '#DCC2C2',
+    typedColor: '#ffffff',
+    cursorChar: '_',
+    showCursor: true,
+    hideCursorOnType: false,
+    typeDelayMs: 70,
+    holdMs: 1500,
+    deleteDelayMs: 100,
+    fontFamily: 'Switzer, sans-serif',
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '1.4em',
+    letterSpacing: '-0.025em',
+    textAlign: 'center'
+  });
+
+  const ctaTypewriterEl = document.getElementById('cta-typewriter');
+  if(ctaTypewriterEl) initTypewriter(ctaTypewriterEl, {
+    texts: ['workartificial.com', '_'],
+    prefix: 'hello@',
+    color: '#ffffff',
+    typedColor: '#FBDBDB',
+    showCursor: true,
+    cursorMode: 'block',
+    cursorColor: '#FF8D00',
+    cursorWidth: 3,
+    cursorHeightPx: 15,
+    hideCursorOnType: false,
+    typeDelayMs: 55,
+    holdMs: 1800,
+    deleteDelayMs: 85,
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '13px',
+    fontWeight: 700,
+    lineHeight: '1.15em',
+    letterSpacing: '-0.02em',
+    textAlign: 'center'
+  });
+
+  // ---------- coverflow gallery (Originkit "Smooth 3D Slideshow", vanilla port) ----------
+  // The source component keeps every card mounted in a shared preserve-3d stage
+  // and re-poses ALL of them (position, depth, tilt, scale, dim) whenever the
+  // active index changes, animating purely via CSS transform/opacity transitions
+  // — no per-frame JS. This port keeps that exact model, swapping <img> for
+  // <video> so the cards can hold the two testimonial clips. Non-active cards
+  // stay clickable (click = bring to center, matching the source), but unlike
+  // the source's photo version, clicking the ALREADY-active card does nothing
+  // here (the source advances to the next slide on that click) — for a video
+  // card the active one needs its native play/pause/scrub controls to just work
+  // without the whole card jumping to the next slide out from under the click.
+  // The caption under the gallery updates to match whichever card is active.
+  function initCoverflow(container, opts){
+    opts = Object.assign({
+      slides: [],           // [{ src, name, role }]
+      cardWidth: 420,
+      cardHeight: 300,
+      radius: 3,             // 0-20 rounding scale
+      tilt: 10,
+      sideTilt: 6,
+      gap: 9,
+      opacity: 55,           // inactive-card visible opacity, 0-100
+      transitionDur: 0.6,
+      transitionEase: 'cubic-bezier(0.22,1,0.36,1)',
+      onActiveChange: null
+    }, opts || {});
+
+    const SCALE_STEP = 0.16, MAX_VISIBLE = 2, DEPTH = 240, PERSPECTIVE = 1600;
+    const list = (opts.slides || []).filter(s => s && s.src);
+    const n = list.length;
+    if(!n) return;
+
+    // Size the card off the container's actual rendered width rather than a
+    // fixed breakpoint. On narrow phones the coverflow-wrap is barely wider
+    // than a full-size card, which left no room to peek the next slide (it
+    // was clipped almost entirely by `overflow:hidden`). Capping the card at
+    // ~74% of the real container width guarantees a visible peek at any size.
+    const containerWidth = container.clientWidth || (opts.cardWidth + 80);
+    let cardW = Math.min(opts.cardWidth, Math.round(containerWidth * 0.74));
+    let cardH = Math.round(cardW * (opts.cardHeight / opts.cardWidth));
+    let gap = opts.gap;
+    const peekOffset = Math.round(containerWidth * 0.30);
+
+    const effectiveRadius = (Math.max(0, Math.min(20, opts.radius)) / 20) * (Math.min(cardW, cardH) / 2);
+    const dim = 1 - Math.max(0, Math.min(100, opts.opacity)) / 100;
+    const transitionCss = `transform ${opts.transitionDur}s ${opts.transitionEase}, opacity ${opts.transitionDur}s ${opts.transitionEase}`;
+
+    container.style.position = 'relative';
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
+    container.style.justifyContent = 'center';
+    container.style.perspective = PERSPECTIVE + 'px';
+    container.style.overflow = 'hidden';
+    container.style.outline = 'none';
+    container.setAttribute('tabindex', '0');
+    container.setAttribute('role', 'group');
+    container.setAttribute('aria-roledescription', 'carousel');
+
+    const stage = document.createElement('div');
+    stage.style.cssText = `position:relative; width:${cardW}px; height:${cardH}px; transform-style:preserve-3d;`;
+    container.appendChild(stage);
+
+    let active = 0, locked = false;
+    function withLock(fn){
+      if(locked) return;
+      locked = true;
+      fn();
+      setTimeout(function(){ locked = false; }, Math.max(50, opts.transitionDur * 1000));
+    }
+
+    const cards = list.map(function(slide, i){
+      const card = document.createElement('div');
+      card.style.cssText = `position:absolute; left:50%; top:50%; width:${cardW}px; height:${cardH}px; border-radius:${effectiveRadius}px; overflow:hidden; transform-style:preserve-3d; transform-origin:center center; background:#1a1a1a; transition:${transitionCss};`;
+
+      const video = document.createElement('video');
+      video.src = slide.src;
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      video.style.cssText = 'position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; background:#000;';
+      card.appendChild(video);
+
+      const dimEl = document.createElement('div');
+      dimEl.style.cssText = `position:absolute; inset:0; background:#000; pointer-events:none; transition:opacity ${opts.transitionDur}s ${opts.transitionEase};`;
+      card.appendChild(dimEl);
+
+      card.addEventListener('click', function(){
+        if(i === active) return;
+        withLock(function(){ active = i; render(); });
+      });
+
+      stage.appendChild(card);
+      return {card: card, dimEl: dimEl, video: video};
+    });
+
+    function render(){
+      cards.forEach(function(c, i){
+        let rel = i - active;
+        if(rel > n / 2) rel -= n;
+        if(rel < -n / 2) rel += n;
+        const ax = Math.abs(rel);
+        const visible = ax <= MAX_VISIBLE;
+        const isActive = rel === 0;
+        const sc = Math.max(0.4, 1 - ax * SCALE_STEP);
+        const tx = rel * peekOffset;
+        const tz = -ax * DEPTH;
+        const ry = -rel * opts.tilt;
+        const rz = rel * opts.sideTilt;
+        c.card.style.transform = `translate(-50%,-50%) translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${sc})`;
+        c.card.style.opacity = visible ? '1' : '0';
+        c.card.style.zIndex = String(100 - ax);
+        c.card.style.cursor = isActive ? 'default' : 'pointer';
+        c.card.style.pointerEvents = visible ? 'auto' : 'none';
+        c.dimEl.style.opacity = isActive ? '0' : String(dim);
+        if(!isActive) c.video.pause();
+      });
+      if(typeof opts.onActiveChange === 'function') opts.onActiveChange(list[active], active);
+    }
+    render();
+
+    container.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight'){
+        e.preventDefault();
+        withLock(function(){ active = (active + 1) % n; render(); });
+      } else if(e.key === 'ArrowLeft'){
+        e.preventDefault();
+        withLock(function(){ active = ((active - 1) % n + n) % n; render(); });
+      }
+    });
+  }
+  const testiCoverflowEl = document.getElementById('testi-coverflow');
+  const testiCaptionName = document.getElementById('testi-caption-name');
+  const testiCaptionRole = document.getElementById('testi-caption-role');
+  if(testiCoverflowEl) initCoverflow(testiCoverflowEl, {
+    slides: [
+      { src: 'testimonial-1-h264.mp4', name: 'Alicica Joseph', role: 'Co-Founder, TradeBase' },
+      { src: 'testimonial-2.mp4', name: 'Arianna Anglin', role: 'Online Digital Marketing Expert' }
+    ],
+    cardWidth: 420,
+    cardHeight: 300,
+    radius: 3,
+    tilt: 10,
+    sideTilt: 6,
+    gap: 9,
+    opacity: 55,
+    transitionDur: 0.6,
+    transitionEase: 'cubic-bezier(0.22,1,0.36,1)',
+    onActiveChange: function(slide){
+      if(testiCaptionName) testiCaptionName.textContent = slide.name || '';
+      if(testiCaptionRole) testiCaptionRole.textContent = slide.role || '';
+    }
+  });
+
+  // Live chat widget — staggered pop-in the first time it scrolls into view,
+  // and replays on hover (after a 2s pause, so it doesn't retrigger on every
+  // passing mouse movement) so it doesn't just sit there static.
+  const chatFrameEl = document.getElementById('chat-frame');
+  if(chatFrameEl){
+    let chatMsgTimers = [];
+    function playChat(){
+      chatMsgTimers.forEach(t=>clearTimeout(t));
+      chatMsgTimers = [];
+      const msgs = chatFrameEl.querySelectorAll('.chat-msg');
+      msgs.forEach(m=> m.classList.remove('shown'));
+      void chatFrameEl.offsetWidth; // force reflow so the transition retriggers
+      msgs.forEach((m,i)=>{
+        chatMsgTimers.push(setTimeout(()=> m.classList.add('shown'), i*260));
+      });
+    }
+
+    let chatLoop = null;
+    function startChatLoop(){
+      if(chatLoop) return;
+      playChat();
+      chatLoop = setInterval(playChat, 4200);
+    }
+    function stopChatLoop(){
+      if(chatLoop){ clearInterval(chatLoop); chatLoop = null; }
+    }
+
+    const chatIo = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) startChatLoop(); else stopChatLoop();
+      });
+    }, {threshold:0.35});
+    chatIo.observe(chatFrameEl);
+
+    // hover still forces an instant replay on top of the auto-loop
+    let hoverReplayTimer = null;
+    chatFrameEl.addEventListener('mouseenter', ()=>{
+      hoverReplayTimer = setTimeout(playChat, 1000);
+    });
+    chatFrameEl.addEventListener('mouseleave', ()=>{
+      if(hoverReplayTimer) clearTimeout(hoverReplayTimer);
+    });
+  }
+
+  // FAQ accordion — was missing its click wiring entirely, nothing toggled 'open'
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const q = item.querySelector('.faq-q');
+    if(q) q.addEventListener('click', ()=> item.classList.toggle('open'));
+  });
+
+</script>
+
+</body>
+</html>
