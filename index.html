@@ -647,7 +647,7 @@
             </svg>
             Sample AI receptionist you need to hear
           </div>
-          <audio controls preload="metadata" src="ai-receptionist-sample.mp3"></audio>
+          <audio controls preload="metadata" id="cas-audio" src="meta-ad-receptionist.mp3#t=91"></audio>
         </div>
       </div>
     </div>
@@ -1075,6 +1075,24 @@
     el.scrollIntoView({behavior:'smooth', block:'center'});
     setTimeout(()=>el.focus(), 450);
   }
+
+  // AI receptionist audio sample — full file stays intact, but playback
+  // should always jump to 1:31 (the interesting part). The #t=91 media
+  // fragment in the src handles this in most browsers already; this is a
+  // JS fallback for the ones that ignore it, and re-applies the seek if the
+  // user's browser resets currentTime to 0 once metadata loads.
+  (function(){
+    const casAudio = document.getElementById('cas-audio');
+    if(!casAudio) return;
+    const START_AT = 91;
+    function seekToStart(){
+      if(casAudio.currentTime < START_AT) casAudio.currentTime = START_AT;
+    }
+    casAudio.addEventListener('loadedmetadata', seekToStart);
+    casAudio.addEventListener('play', function(){
+      if(casAudio.currentTime < 1) casAudio.currentTime = START_AT;
+    });
+  })();
 
   // card carousel
   function scrollCards(dir){
