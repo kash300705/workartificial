@@ -67,6 +67,17 @@
     border:none; cursor:pointer;
     transition:transform .15s ease, opacity .15s ease;
   }
+  .header-actions{ display:flex; align-items:center; gap:18px; }
+  .btn-voice-demo{
+    display:flex; align-items:center; gap:7px;
+    color:var(--text-dim); font-size:13.5px; font-weight:500;
+    text-decoration:none; border:1px solid var(--card-border); border-radius:var(--radius-pill);
+    padding:9px 16px; transition:color .2s ease, border-color .2s ease;
+  }
+  .btn-voice-demo:hover{ color:#fff; border-color:rgba(255,0,17,0.4); }
+  .btn-voice-demo .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px 1px rgba(255,0,17,0.7); }
+  @media (max-width:640px){ .btn-voice-demo span.label-full{ display:none; } .btn-voice-demo span.label-short{ display:inline; } }
+  @media (min-width:641px){ .btn-voice-demo span.label-short{ display:none; } }
   .btn-talk:hover{transform:translateY(-1px); opacity:.92;}
 
   /* ---------- universe hand (Originkit Hero-28 extraction) ---------- */
@@ -480,7 +491,14 @@
     <div class="bh-logo" id="bh-logo"></div>
     Work Artificial
   </div>
-  <button class="btn-talk" onclick="focusFinalEmail('lets_talk')">Let's talk</button>
+  <div class="header-actions">
+    <a class="btn-voice-demo" href="demo-voice-agent.html">
+      <span class="dot"></span>
+      <span class="label-full">Try Demo Voice Agent</span>
+      <span class="label-short">Voice Demo</span>
+    </a>
+    <button class="btn-talk" onclick="focusFinalEmail('lets_talk')">Let's talk</button>
+  </div>
 </header>
 
 <!-- HERO (text left, Originkit Hero-28 universe-hand visual right) -->

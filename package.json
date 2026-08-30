@@ -1,0 +1,6 @@
+{
+  "name": "workartificial-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Work Artificial marketing site (static) + /api serverless functions for the Demo Voice Agent (Retell AI)."
+}

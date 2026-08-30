@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo Voice Agent | Work Artificial</title>
+<meta name="description" content="Talk to the Work Artificial AI receptionist live. A 1-minute voice demo of AIOS, the AI Operations System that answers and books for local businesses.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23000000'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='1'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%23ff0011'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23ff0011' stroke-opacity='0.35' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700,800&display=swap">
+<style>
+  :root{
+    --bg:#000000;
+    --bg-alt:#0a0a0a;
+    --text:#ffffff;
+    --text-dim:rgba(255,255,255,0.75);
+    --text-mute:rgba(255,255,255,0.5);
+    --text-faint:rgba(255,255,255,0.28);
+    --accent:#ff0011;
+    --accent-btn:#d60007;
+    --card-border:rgba(255,255,255,0.08);
+    --radius-pill:999px;
+    --radius-card:16px;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height:100vh; overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ---------- ambient animated black background ---------- */
+  .bg-glow{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 900px 600px at 22% 18%, rgba(255,0,17,0.10), rgba(0,0,0,0) 60%),
+      radial-gradient(ellipse 800px 700px at 82% 78%, rgba(255,0,17,0.07), rgba(0,0,0,0) 62%),
+      radial-gradient(ellipse 1200px 900px at 50% 105%, rgba(255,255,255,0.03), rgba(0,0,0,0) 60%);
+    animation:bgDrift 22s ease-in-out infinite alternate;
+  }
+  @keyframes bgDrift{
+    0%{ opacity:0.75; transform:scale(1) translateY(0); }
+    100%{ opacity:1; transform:scale(1.05) translateY(-1.5%); }
+  }
+  .bg-grain{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:relative; z-index:2;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:28px 40px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px; font-weight:500; font-size:14px;
+    letter-spacing:0.08em; text-transform:uppercase; color:#fff; text-decoration:none;
+  }
+  .logo-dot{
+    width:28px; height:28px; border-radius:50%; flex-shrink:0;
+    background:#000; position:relative; overflow:hidden;
+    box-shadow:0 0 14px rgba(255,0,17,0.28), inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+  .logo-dot::after{
+    content:''; position:absolute; inset:0; margin:auto; width:9px; height:9px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 10px 2px rgba(255,0,17,0.7);
+    top:0; bottom:0; left:0; right:0;
+  }
+  .back-link{ color:var(--text-mute); font-size:13px; text-decoration:none; transition:color .25s ease; }
+  .back-link:hover{ color:#fff; }
+
+  /* ---------- main layout ---------- */
+  main{
+    position:relative; z-index:2;
+    min-height:calc(100vh - 90px);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:24px 24px 64px;
+  }
+  .dv-eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-mute);
+    border:1px solid var(--card-border); border-radius:var(--radius-pill);
+    padding:7px 16px; margin-bottom:22px;
+  }
+  .dv-eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px 1px rgba(255,0,17,0.8); }
+  h1.dv-title{ font-size:42px; font-weight:500; letter-spacing:-0.02em; }
+  p.dv-sub{ color:var(--text-dim); font-size:16px; max-width:480px; margin:16px auto 0; line-height:1.55; }
+  p.dv-limit{ color:var(--text-mute); font-size:13px; margin-top:10px; letter-spacing:0.02em; }
+
+  /* ---------- orb stage ---------- */
+  .orb-stage{
+    position:relative; width:min(340px, 68vw); aspect-ratio:1;
+    margin:46px auto 8px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .orb-stage canvas{ position:absolute; inset:-18%; width:136%; height:136%; display:block; }
+  .orb-ring{
+    position:absolute; inset:0; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.08);
+    transition:border-color .5s ease, box-shadow .5s ease;
+  }
+  .orb-stage.state-listening .orb-ring{ box-shadow:0 0 60px 6px rgba(255,0,17,0.10); }
+  .orb-stage.state-speaking .orb-ring{ box-shadow:0 0 90px 14px rgba(255,0,17,0.22); border-color:rgba(255,0,17,0.25); }
+  .orb-stage.state-connecting .orb-ring{ box-shadow:0 0 50px 8px rgba(255,255,255,0.08); }
+
+  .orb-overlay{
+    position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:14px;
+    pointer-events:none;
+  }
+  .orb-overlay > *{ pointer-events:auto; }
+
+  .mic-btn{
+    width:78px; height:78px; border-radius:50%; border:none; cursor:pointer;
+    background:radial-gradient(circle at 35% 30%, #2a2a2a, #0a0a0a);
+    border:1px solid rgba(255,255,255,0.14);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; transition:transform .3s var(--ease), box-shadow .3s ease, border-color .3s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  }
+  .mic-btn:hover{ transform:scale(1.06); border-color:rgba(255,0,17,0.4); box-shadow:0 10px 40px rgba(255,0,17,0.18); }
+  .mic-btn:active{ transform:scale(0.98); }
+  .mic-btn svg{ width:26px; height:26px; }
+  .mic-btn:disabled{ opacity:0.5; cursor:not-allowed; transform:none; }
+
+  .dv-state-label{ font-size:14px; font-weight:600; letter-spacing:0.02em; color:#fff; min-height:20px; }
+  .dv-state-sub{ font-size:12.5px; color:var(--text-mute); }
+
+  .wave-bars{ display:flex; align-items:flex-end; gap:4px; height:22px; }
+  .wave-bars span{
+    display:block; width:3px; border-radius:2px; background:var(--accent);
+    height:6px; transform-origin:bottom; transition:height .12s ease-out; opacity:0.85;
+  }
+
+  .timer-chip{
+    display:inline-flex; align-items:center; gap:7px;
+    font-size:12.5px; color:var(--text-dim);
+    border:1px solid var(--card-border); border-radius:var(--radius-pill);
+    padding:6px 14px; margin-top:4px;
+    font-variant-numeric:tabular-nums;
+  }
+  .timer-chip .pulse{ width:6px; height:6px; border-radius:50%; background:var(--accent); animation:timerPulse 1s ease-in-out infinite; }
+  @keyframes timerPulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+
+  .start-btn{
+    display:inline-flex; align-items:center; gap:9px;
+    background:#fff; color:#0a0a0a; border:none; border-radius:var(--radius-pill);
+    font-family:inherit; font-weight:600; font-size:15px; padding:15px 30px; cursor:pointer;
+    transition:transform .3s var(--ease), box-shadow .3s ease, opacity .3s ease;
+    box-shadow:0 12px 32px rgba(0,0,0,0.4);
+  }
+  .start-btn:hover{ transform:translateY(-2px); box-shadow:0 16px 40px rgba(255,0,17,0.22); }
+  .start-btn:disabled{ opacity:0.55; cursor:not-allowed; transform:none; box-shadow:none; }
+  .start-btn svg{ width:16px; height:16px; }
+
+  .dv-panel{ margin-top:8px; max-width:420px; }
+  .dv-panel h2{ font-size:26px; font-weight:500; margin-bottom:10px; }
+  .dv-panel p{ color:var(--text-dim); font-size:14.5px; line-height:1.6; }
+  .dv-panel p.note{ color:var(--text-mute); font-size:13px; margin-top:12px; }
+  .dv-panel-actions{ display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:26px; }
+  .contact-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent); color:#fff; border:none; border-radius:var(--radius-pill);
+    font-family:inherit; font-weight:600; font-size:15px; padding:14px 28px; text-decoration:none;
+    transition:transform .3s var(--ease), box-shadow .3s ease;
+  }
+  .contact-btn:hover{ transform:translateY(-2px); box-shadow:0 14px 34px rgba(255,0,17,0.3); }
+  .home-link{ color:var(--text-mute); font-size:13px; text-decoration:none; transition:color .25s ease; }
+  .home-link:hover{ color:#fff; }
+
+  .dv-error{ color:#ff6b76; font-size:13px; margin-top:14px; max-width:340px; }
+
+  @media (max-width:640px){
+    header{ padding:20px 22px; }
+    h1.dv-title{ font-size:32px; }
+    .orb-stage{ width:min(280px, 72vw); margin:34px auto 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grain"></div>
+
+<header>
+  <a href="index.html" class="logo"><span class="logo-dot"></span>Work Artificial</a>
+  <a href="index.html" class="back-link">Back to site</a>
+</header>
+
+<main>
+  <div class="dv-eyebrow"><span class="dot"></span>Live voice demo</div>
+  <h1 class="dv-title">Demo Voice Agent</h1>
+  <p class="dv-sub">Talk to our AI receptionist and experience how an AI-powered receptionist can handle calls for your business.</p>
+  <p class="dv-limit">Demo limited to 1 minute.</p>
+
+  <div class="orb-stage" id="orb-stage">
+    <canvas id="orb-canvas"></canvas>
+    <div class="orb-ring"></div>
+    <div class="orb-overlay" id="orb-overlay"><!-- populated by JS --></div>
+  </div>
+</main>
+
+<script type="module">
+import { RetellWebClient } from "https://esm.sh/retell-client-js-sdk@2";
+
+/* =========================================================================
+   Constellation Shell — vanilla WebGL port of the Originkit React component
+   pasted by the user. Same shader math (screen-space billboarded line quads
+   over points scattered uniformly on a sphere, neighbour-linked within a
+   radius), driven here by a small state machine instead of static props so
+   the orb visibly reacts to idle / connecting / listening / speaking / ended.
+   ========================================================================= */
+(function(){
+  const MAX_DPR = 2;
+  const R_SPHERE = 2.5;
+  const BASE_N = 200;
+  const BASE_LINK = 1.0954;
+  const FOCAL = 1.303;
+
+  const VERT_SRC = `
+    precision highp float;
+    attribute vec3 a_p0;
+    attribute vec3 a_p1;
+    attribute vec2 a_corner;
+    uniform mat3  uRot;
+    uniform vec2  uRes;
+    uniform float uDist, uWidth;
+    varying float v_depth;
+    void main(){
+      float ar = uRes.x / max(uRes.y, 1.0);
+      vec3 r0 = uRot * a_p0;
+      vec3 r1 = uRot * a_p1;
+      float w0 = max(uDist - r0.z, 0.05);
+      float w1 = max(uDist - r1.z, 0.05);
+      vec4 c0 = vec4((${FOCAL.toFixed(4)}/ar) * r0.x, ${FOCAL.toFixed(4)} * r0.y, 0.0, w0);
+      vec4 c1 = vec4((${FOCAL.toFixed(4)}/ar) * r1.x, ${FOCAL.toFixed(4)} * r1.y, 0.0, w1);
+      vec2 n0 = c0.xy / c0.w;
+      vec2 n1 = c1.xy / c1.w;
+      vec2 dir = (n1 - n0) * vec2(ar, 1.0);
+      dir = normalize(dir + vec2(1e-6));
+      vec2 perp = vec2(-dir.y, dir.x) / vec2(ar, 1.0);
+      vec4 sel = mix(c0, c1, a_corner.x);
+      sel.xy += perp * a_corner.y * uWidth * sel.w;
+      v_depth = mix(r0.z, r1.z, a_corner.x) / ${R_SPHERE.toFixed(2)};
+      gl_Position = sel;
+    }
+  `;
+  const FRAG_SRC = `
+    precision mediump float;
+    uniform vec3  uBase, uAccent;
+    uniform float uFade;
+    varying float v_depth;
+    void main(){
+      float t = clamp(v_depth * 0.5 + 0.5, 0.0, 1.0);
+      vec3 col = mix(uBase, uAccent, t);
+      float a = mix(1.0 - uFade, 1.0, t);
+      gl_FragColor = vec4(col * a, a);
+    }
+  `;
+
+  function compile(gl, type, src){
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){
+      console.error('orb shader:', gl.getShaderInfoLog(sh));
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
+  }
+  function parseColor(str, fb){
+    if(!str) return fb;
+    if(str.charAt(0) === '#'){
+      let hex = str.slice(1);
+      if(hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+      const r = parseInt(hex.slice(0,2),16), g = parseInt(hex.slice(2,4),16), b = parseInt(hex.slice(4,6),16);
+      if(!isNaN(r) && !isNaN(g) && !isNaN(b)) return [r/255, g/255, b/255];
+    }
+    return fb;
+  }
+  function clampN(v, lo, hi){ return v < lo ? lo : v > hi ? hi : v; }
+  function rng(seed){
+    let a = seed >>> 0;
+    return function(){
+      a += 0x6d2b79f5;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const CORNERS = [[0,-1],[1,-1],[1,1],[0,-1],[1,1],[0,1]];
+
+  function net(n, linkScale){
+    const R = rng(1337);
+    const px = new Float32Array(n*3);
+    for(let i=0;i<n;i++){
+      const theta = R()*Math.PI*2;
+      const phi = Math.acos(R()*2-1);
+      const s = Math.sin(phi);
+      px[i*3] = R_SPHERE*s*Math.cos(theta);
+      px[i*3+1] = R_SPHERE*s*Math.sin(theta);
+      px[i*3+2] = R_SPHERE*Math.cos(phi);
+    }
+    const link = BASE_LINK * Math.sqrt(BASE_N/n) * linkScale;
+    const l2 = link*link;
+    const ea = [], eb = [];
+    for(let i=0;i<n;i++){
+      for(let j=i+1;j<n;j++){
+        const dx=px[i*3]-px[j*3], dy=px[i*3+1]-px[j*3+1], dz=px[i*3+2]-px[j*3+2];
+        if(dx*dx+dy*dy+dz*dz < l2){ ea.push(i); eb.push(j); }
+      }
+    }
+    const edges = ea.length;
+    const p0 = new Float32Array(edges*6*3);
+    const p1 = new Float32Array(edges*6*3);
+    const corner = new Float32Array(edges*6*2);
+    for(let e=0;e<edges;e++){
+      const i=ea[e], j=eb[e];
+      for(let c=0;c<6;c++){
+        const k=e*6+c;
+        p0[k*3]=px[i*3]; p0[k*3+1]=px[i*3+1]; p0[k*3+2]=px[i*3+2];
+        p1[k*3]=px[j*3]; p1[k*3+1]=px[j*3+1]; p1[k*3+2]=px[j*3+2];
+        corner[k*2]=CORNERS[c][0]; corner[k*2+1]=CORNERS[c][1];
+      }
+    }
+    return { p0, p1, corner, edges };
+  }
+
+  // Per-state motion presets. "current" lerps toward "target" every frame so
+  // switching states (e.g. Listening -> Speaking) feels like a breath, not a snap.
+  const STATE_PRESETS = {
+    idle:        { speed:16, hover:70,  distance:5.8, fade:0.60, link:1.05, lineWidth:0.9 },
+    connecting:  { speed:42, hover:90,  distance:5.6, fade:0.55, link:1.05, lineWidth:1.0 },
+    listening:   { speed:28, hover:150, distance:5.5, fade:0.50, link:1.10, lineWidth:1.0 },
+    speaking:    { speed:62, hover:190, distance:4.9, fade:0.42, link:1.15, lineWidth:1.1 },
+    ended:       { speed:7,  hover:40,  distance:6.4, fade:0.72, link:1.0,  lineWidth:0.85 },
+  };
+
+  function initConstellationShell(canvas, opts){
+    opts = opts || {};
+    const baseColor = parseColor(opts.baseColor, [0.30,0.30,0.32]);
+    const accentColor = parseColor(opts.accentColor, [1.0, 0.0, 0.07]);
+
+    const gl = canvas.getContext('webgl', { alpha:true, antialias:true, depth:false, premultipliedAlpha:true });
+    if(!gl){ console.warn('orb: WebGL unavailable, skipping visual'); return { setState(){}, feedAudioLevel(){} }; }
+
+    const vs = compile(gl, gl.VERTEX_SHADER, VERT_SRC);
+    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG_SRC);
+    if(!vs || !fs) return { setState(){}, feedAudioLevel(){} };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog, gl.LINK_STATUS)){ console.error('orb link:', gl.getProgramInfoLog(prog)); return { setState(){}, feedAudioLevel(){} }; }
+    gl.useProgram(prog);
+
+    const aP0 = gl.getAttribLocation(prog, 'a_p0');
+    const aP1 = gl.getAttribLocation(prog, 'a_p1');
+    const aCorner = gl.getAttribLocation(prog, 'a_corner');
+    gl.enableVertexAttribArray(aP0);
+    gl.enableVertexAttribArray(aP1);
+    gl.enableVertexAttribArray(aCorner);
+
+    const locs = {};
+    const u = (name) => (name in locs) ? locs[name] : (locs[name] = gl.getUniformLocation(prog, name));
+
+    const b0 = gl.createBuffer(), b1 = gl.createBuffer(), bc = gl.createBuffer();
+    let builtN = 0, builtLink = 0, verts = 0;
+    const DENSITY = 260; // fixed point count — this is a small ambient badge, not a hero canvas
+    function build(linkScale){
+      const g = net(DENSITY, linkScale);
+      gl.bindBuffer(gl.ARRAY_BUFFER, b0); gl.bufferData(gl.ARRAY_BUFFER, g.p0, gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ARRAY_BUFFER, b1); gl.bufferData(gl.ARRAY_BUFFER, g.p1, gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bc); gl.bufferData(gl.ARRAY_BUFFER, g.corner, gl.STATIC_DRAW);
+      builtN = DENSITY; builtLink = linkScale; verts = g.edges*6;
+    }
+
+    const cur = { ...STATE_PRESETS.idle };
+    const tgt = { ...STATE_PRESETS.idle };
+    let audioLevel = 0; // 0..1, decays each frame, boosted by real agent audio samples
+
+    let raf = 0, last = performance.now(), clock = 0;
+    const ptr = { tx:0, ty:0, x:0, y:0 };
+
+    function resize(){
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      const cw = canvas.clientWidth || 300, ch = canvas.clientHeight || 300;
+      const bw = Math.max(1, Math.round(cw*dpr)), bh = Math.max(1, Math.round(ch*dpr));
+      if(canvas.width !== bw || canvas.height !== bh){ canvas.width = bw; canvas.height = bh; }
+    }
+    let ro = null;
+    if(typeof ResizeObserver !== 'undefined'){
+      ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+    } else {
+      window.addEventListener('resize', resize);
+    }
+
+    function render(now){
+      const dt = Math.min(0.05, (now-last)/1000);
+      last = now;
+      clock += dt;
+
+      const lerpRate = 1 - Math.exp(-dt*2.2);
+      for(const k in cur) cur[k] += (tgt[k]-cur[k]) * lerpRate;
+      audioLevel *= Math.exp(-dt*3.5); // natural decay between audio samples
+
+      resize();
+      gl.viewport(0,0,canvas.width,canvas.height);
+
+      if(builtN !== DENSITY || builtLink !== cur.link) build(cur.link);
+
+      const pk = 1 - Math.exp(-dt*3.5);
+      ptr.x += (ptr.tx-ptr.x)*pk;
+      ptr.y += (ptr.ty-ptr.y)*pk;
+
+      const hoverAmt = cur.hover/200;
+      const speed = (cur.speed/50) + audioLevel*0.9;
+      const ay = clock*0.12*speed*2.0 + ptr.x*2.2*hoverAmt;
+      const ax = clock*0.06*speed*2.0 - ptr.y*1.2*hoverAmt;
+      const cy=Math.cos(ay), sy=Math.sin(ay), cx=Math.cos(ax), sx=Math.sin(ax);
+      const rot = new Float32Array([ cy,0,-sy, sy*sx,cx,cy*sx, sy*cx,-sx,cy*cx ]);
+
+      gl.clearColor(0,0,0,0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.disable(gl.DEPTH_TEST);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, b0); gl.vertexAttribPointer(aP0,3,gl.FLOAT,false,0,0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, b1); gl.vertexAttribPointer(aP1,3,gl.FLOAT,false,0,0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bc); gl.vertexAttribPointer(aCorner,2,gl.FLOAT,false,0,0);
+
+      gl.uniformMatrix3fv(u('uRot'), false, rot);
+      gl.uniform2f(u('uRes'), canvas.width, canvas.height);
+      gl.uniform1f(u('uDist'), cur.distance - audioLevel*0.5);
+      gl.uniform1f(u('uWidth'), cur.lineWidth*0.0016);
+      gl.uniform1f(u('uFade'), cur.fade);
+      gl.uniform3f(u('uBase'), baseColor[0], baseColor[1], baseColor[2]);
+      gl.uniform3f(u('uAccent'), accentColor[0], accentColor[1], accentColor[2]);
+
+      gl.drawArrays(gl.TRIANGLES, 0, verts);
+      raf = requestAnimationFrame(render);
+    }
+
+    build(cur.link);
+    const track = (e) => {
+      const r = canvas.getBoundingClientRect();
+      if(r.width<=0 || r.height<=0) return;
+      ptr.tx = clampN((e.clientX-r.left)/r.width,0,1) - 0.5;
+      ptr.ty = clampN((e.clientY-r.top)/r.height,0,1) - 0.5;
+    };
+    const onLeave = () => { ptr.tx=0; ptr.ty=0; };
+    canvas.addEventListener('pointermove', track);
+    canvas.addEventListener('pointerleave', onLeave);
+
+    raf = requestAnimationFrame(render);
+
+    return {
+      setState(name){
+        const preset = STATE_PRESETS[name] || STATE_PRESETS.idle;
+        Object.assign(tgt, preset);
+      },
+      feedAudioLevel(level){
+        audioLevel = Math.max(audioLevel, clampN(level, 0, 1));
+      },
+      destroy(){
+        cancelAnimationFrame(raf);
+        if(ro) ro.disconnect(); else window.removeEventListener('resize', resize);
+      }
+    };
+  }
+  window.__initConstellationShell = initConstellationShell;
+})();
+
+/* =========================================================================
+   Demo Voice Agent — state machine wiring the orb + timer + Retell call
+   ========================================================================= */
+(function(){
+  const DEMO_SECONDS = 60;
+  const STORAGE_KEY = 'wa_demo_voice_agent_used';
+  const CONTACT_URL = 'index.html#cta-email';
+  const HOME_URL = 'index.html';
+
+  const overlay = document.getElementById('orb-overlay');
+  const stageEl = document.getElementById('orb-stage');
+  const canvas = document.getElementById('orb-canvas');
+
+  const orb = window.__initConstellationShell(canvas, {
+    baseColor: '#3a3a3d',
+    accentColor: '#ff0011',
+  });
+
+  let client = null;
+  let timerInterval = null;
+  let secondsLeft = DEMO_SECONDS;
+  let callEndedHandled = false;
+  let callStartedAt = 0;
+
+  function setStage(stateName){
+    stageEl.classList.remove('state-idle','state-connecting','state-listening','state-speaking','state-ended');
+    stageEl.classList.add('state-' + stateName);
+    orb.setState(stateName);
+  }
+
+  function svgMic(){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>';
+  }
+
+  function renderIdle(){
+    setStage('idle');
+    overlay.innerHTML = `
+      <button class="mic-btn" id="start-btn" aria-label="Start demo">${svgMic()}</button>
+      <button class="start-btn" id="start-btn-2">${svgMic()}Start Demo</button>
+    `;
+    document.getElementById('start-btn').onclick = beginDemo;
+    document.getElementById('start-btn-2').onclick = beginDemo;
+  }
+
+  function renderConnecting(){
+    setStage('connecting');
+    overlay.innerHTML = `
+      <div class="dv-state-label">Connecting…</div>
+      <div class="dv-state-sub">Warming up the line</div>
+    `;
+  }
+
+  function renderLive(){
+    overlay.innerHTML = `
+      <div class="dv-state-label" id="state-label">Listening…</div>
+      <div class="wave-bars" id="wave-bars">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="timer-chip"><span class="pulse"></span><span id="timer-text">Demo time remaining: 60s</span></div>
+    `;
+  }
+
+  function renderEnded(reason){
+    let heading = 'Demo Complete';
+    let sub = "You've reached the 1-minute demo limit.";
+    if(reason === 'already-used'){
+      sub = "You've already used your 1-minute demo on this device.";
+    } else if(reason === 'early'){
+      sub = 'The call ended.';
+    } else if(reason === 'error'){
+      heading = "Couldn't connect";
+      sub = 'Something went wrong starting the demo. Please try again in a moment.';
+    }
+    setStage('ended');
+    const showRetry = reason === 'error';
+    overlay.innerHTML = `
+      <div class="dv-panel">
+        <h2>${heading}</h2>
+        <p>${sub}</p>
+        ${reason !== 'error' ? '<p class="note">If you\'d like to see how an AI receptionist could work specifically for your business, feel free to contact us.</p>' : ''}
+        <div class="dv-panel-actions">
+          <a class="contact-btn" href="${CONTACT_URL}">Contact Us</a>
+          ${showRetry ? '<button class="start-btn" id="retry-btn" style="margin-top:2px;">Try again</button>' : ''}
+          <a class="home-link" href="${HOME_URL}">Back to Work Artificial</a>
+        </div>
+      </div>
+    `;
+    if(showRetry){
+      document.getElementById('retry-btn').onclick = beginDemo;
+    }
+  }
+
+  function updateWaveBars(level){
+    const bars = document.querySelectorAll('#wave-bars span');
+    if(!bars.length) return;
+    bars.forEach((b, i) => {
+      const jitter = 0.5 + Math.sin(Date.now()/220 + i*1.3) * 0.5;
+      const h = 6 + Math.max(level, 0.06) * 24 * (0.6 + jitter*0.7);
+      b.style.height = Math.min(26, h) + 'px';
+    });
+  }
+  let idleWaveRaf = 0;
+  function idleWaveLoop(){
+    updateWaveBars(0.08);
+    idleWaveRaf = requestAnimationFrame(idleWaveLoop);
+  }
+
+  function startTimer(){
+    secondsLeft = DEMO_SECONDS;
+    const label = document.getElementById('timer-text');
+    if(label) label.textContent = 'Demo time remaining: ' + secondsLeft + 's';
+    timerInterval = setInterval(() => {
+      secondsLeft -= 1;
+      const el = document.getElementById('timer-text');
+      if(el) el.textContent = secondsLeft > 0 ? ('Demo time remaining: ' + secondsLeft + 's') : 'Demo time remaining: 0s';
+      if(secondsLeft <= 0){
+        endDemo('timeout');
+      }
+    }, 1000);
+  }
+
+  function stopTimer(){
+    if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+    if(idleWaveRaf){ cancelAnimationFrame(idleWaveRaf); idleWaveRaf = 0; }
+  }
+
+  function markUsed(){
+    try{ localStorage.setItem(STORAGE_KEY, String(Date.now())); }catch(e){}
+  }
+  function hasUsedDemo(){
+    try{ return !!localStorage.getItem(STORAGE_KEY); }catch(e){ return false; }
+  }
+
+  function endDemo(reason){
+    if(callEndedHandled) return;
+    callEndedHandled = true;
+    stopTimer();
+    try{ if(client) client.stopCall(); }catch(e){}
+    renderEnded(reason);
+  }
+
+  async function beginDemo(){
+    if(hasUsedDemo()){
+      renderEnded('already-used');
+      return;
+    }
+    const btns = overlay.querySelectorAll('button');
+    btns.forEach(b => b.disabled = true);
+    renderConnecting();
+    callEndedHandled = false;
+
+    try{
+      const res = await fetch('/api/create-web-call', { method:'POST' });
+      if(!res.ok) throw new Error('bad response');
+      const { accessToken } = await res.json();
+      if(!accessToken) throw new Error('no token');
+
+      client = new RetellWebClient();
+
+      client.on('call_started', () => {
+        markUsed();
+        callStartedAt = Date.now();
+        renderLive();
+        startTimer();
+        idleWaveLoop();
+      });
+
+      client.on('agent_start_talking', () => {
+        setStage('speaking');
+        const el = document.getElementById('state-label');
+        if(el) el.textContent = 'Speaking…';
+      });
+
+      client.on('agent_stop_talking', () => {
+        setStage('listening');
+        const el = document.getElementById('state-label');
+        if(el) el.textContent = 'Listening…';
+      });
+
+      client.on('audio', (frame) => {
+        if(!frame || !frame.length){ return; }
+        let sum = 0;
+        for(let i=0;i<frame.length;i++) sum += frame[i]*frame[i];
+        const rms = Math.sqrt(sum/frame.length);
+        const level = Math.min(1, rms*4.2);
+        orb.feedAudioLevel(level);
+        updateWaveBars(level);
+      });
+
+      client.on('call_ended', () => {
+        endDemo(secondsLeft > 0 ? 'early' : 'timeout');
+      });
+
+      client.on('error', (err) => {
+        console.error('Retell call error:', err);
+        endDemo(callStartedAt ? 'early' : 'error');
+      });
+
+      await client.startCall({ accessToken, emitRawAudioSamples: true });
+    } catch(err){
+      console.error('Failed to start demo call:', err);
+      renderEnded('error');
+    }
+  }
+
+  // ---- boot ----
+  if(hasUsedDemo()){
+    renderEnded('already-used');
+  } else {
+    renderIdle();
+  }
+
+  window.addEventListener('beforeunload', () => {
+    try{ if(client) client.stopCall(); }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
