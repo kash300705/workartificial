@@ -2,6 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+  // Force every load/return-to-page of this site to start at the very top.
+  // Without this, the browser's own scroll-position restore (back/forward
+  // navigation, bfcache restores, some mobile browsers on tab re-focus) can
+  // land a visitor mid-page — e.g. on the dashboard-preview section — which
+  // looks like an unwanted "auto scroll" even though nothing on this page
+  // requested it. #cta-email is the one intentional deep link (used by the
+  // demo page's "Contact Us" button) and is left alone.
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){
+    if (window.location.hash !== '#cta-email') { window.scrollTo(0, 0); }
+  });
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Work Artificial | AIOS for local businesses</title>
 <meta name="description" content="Work Artificial builds AIOS, the AI Operations System that answers, books, and follows up for local businesses. Built to beat hiring on speed, cost, and consistency.">
