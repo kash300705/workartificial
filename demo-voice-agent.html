@@ -156,6 +156,15 @@
   .timer-chip .pulse{ width:6px; height:6px; border-radius:50%; background:var(--accent); animation:timerPulse 1s ease-in-out infinite; }
   @keyframes timerPulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
 
+  .end-call-btn{
+    margin-top:6px;
+    background:transparent; color:var(--text-mute);
+    border:1px solid var(--card-border); border-radius:var(--radius-pill);
+    font-family:inherit; font-weight:500; font-size:13px; padding:9px 20px; cursor:pointer;
+    transition:color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .end-call-btn:hover{ color:#fff; border-color:rgba(255,0,17,0.4); background:rgba(255,0,17,0.08); }
+
   .start-btn{
     display:inline-flex; align-items:center; gap:9px;
     background:#fff; color:#0a0a0a; border:none; border-radius:var(--radius-pill);
@@ -721,7 +730,9 @@ import { RetellWebClient } from "https://esm.sh/retell-client-js-sdk@2";
         <span></span><span></span><span></span><span></span><span></span>
       </div>
       <div class="timer-chip"><span class="pulse"></span><span id="timer-text">Demo time remaining: 60s</span></div>
+      <button class="end-call-btn" id="end-call-btn">End Call</button>
     `;
+    document.getElementById('end-call-btn').onclick = () => endDemo('manual');
   }
 
   function renderEnded(reason){
@@ -729,6 +740,8 @@ import { RetellWebClient } from "https://esm.sh/retell-client-js-sdk@2";
     let sub = "You've reached the 1-minute demo limit.";
     if(reason === 'already-used'){
       sub = "You've already used your 1-minute demo on this device.";
+    } else if(reason === 'manual'){
+      sub = 'You ended the call early.';
     } else if(reason === 'early'){
       sub = 'The call ended.';
     } else if(reason === 'error'){

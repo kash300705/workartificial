@@ -416,11 +416,10 @@
   .dash-preview-head{ text-align:center; max-width:640px; margin:0 auto 32px; }
   .dash-preview-head h2{ font-size:32px; letter-spacing:-0.02em; }
   .dash-preview-card{
-    display:block; max-width:640px; margin:0 auto; text-decoration:none;
+    display:block; max-width:640px; margin:0 auto;
     border:1px solid var(--card-border); border-radius:20px; overflow:hidden;
-    background:#0a0a0a; transition:transform .35s var(--ease), border-color .3s ease;
+    background:#0a0a0a; transition:border-color .3s ease;
   }
-  .dash-preview-card:hover{ transform:translateY(-4px); border-color:rgba(255,0,17,0.3); }
   .dash-preview-frame{
     position:relative; width:100%; aspect-ratio:1400/900; overflow:hidden; background:#0d0d0d;
     pointer-events:none;
@@ -430,9 +429,11 @@
     border:none; transform-origin:top left;
   }
   .dash-preview-cta{
-    padding:16px 22px; font-size:14px; font-weight:500; color:var(--text-dim);
-    border-top:1px solid var(--card-border);
+    display:block; padding:16px 22px; font-size:14px; font-weight:500; color:var(--text-dim);
+    border-top:1px solid var(--card-border); text-decoration:none;
+    transition:color .2s ease, background .2s ease;
   }
+  .dash-preview-cta:hover{ color:#fff; background:rgba(255,0,17,0.06); }
   @media (max-width:640px){
     .dash-preview-head h2{ font-size:26px; }
   }
@@ -715,12 +716,12 @@
     <div class="dash-preview-head reveal">
       <h2>See the dashboard live.</h2>
     </div>
-    <a href="sample-dashboard.html" class="dash-preview-card reveal" aria-label="Preview the sample dashboard">
+    <div class="dash-preview-card reveal">
       <div class="dash-preview-frame">
         <iframe src="https://wa-aios-dashboard.onrender.com/" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
       </div>
-      <div class="dash-preview-cta">Open sample dashboard →</div>
-    </a>
+      <a href="sample-dashboard.html" class="dash-preview-cta">Open sample dashboard →</a>
+    </div>
   </div>
 </section>
 
