@@ -68,16 +68,72 @@
     transition:transform .15s ease, opacity .15s ease;
   }
   .header-actions{ display:flex; align-items:center; gap:18px; }
-  .btn-voice-demo{
-    display:flex; align-items:center; gap:7px;
-    color:var(--text-dim); font-size:13.5px; font-weight:500;
-    text-decoration:none; border:1px solid var(--card-border); border-radius:var(--radius-pill);
-    padding:9px 16px; transition:color .2s ease, border-color .2s ease;
+
+  /* ---------- scan grid button (Originkit-style animated CTA, ported to vanilla CSS/JS) ---------- */
+  .btn-scan-voice{
+    position:relative; display:inline-flex; align-items:center; gap:8px;
+    color:#fff; font-size:13.5px; font-weight:600; letter-spacing:0.01em;
+    text-decoration:none; border:1.5px solid rgba(255,255,255,0.25);
+    border-radius:12px; padding:9px 18px; background:#000;
+    overflow:hidden; cursor:pointer;
+    transition:background .3s ease, border-color .3s ease;
   }
-  .btn-voice-demo:hover{ color:#fff; border-color:rgba(255,0,17,0.4); }
-  .btn-voice-demo .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px 1px rgba(255,0,17,0.7); }
-  @media (max-width:640px){ .btn-voice-demo span.label-full{ display:none; } .btn-voice-demo span.label-short{ display:inline; } }
-  @media (min-width:641px){ .btn-voice-demo span.label-short{ display:none; } }
+  .btn-scan-voice:hover{ background:#0d0000; border-color:rgba(255,0,17,0.55); }
+  .scan-brackets{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; z-index:2; }
+  .scan-bracket{
+    fill:none; stroke:#ff0011; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round;
+    transition:d .3s ease, filter .3s ease; filter:drop-shadow(0 0 0 rgba(255,0,17,0));
+  }
+  .btn-scan-voice:hover .scan-bracket{ filter:drop-shadow(0 0 4px rgba(255,0,17,0.75)); }
+  .scan-scanline{
+    position:absolute; left:0; top:0; width:100%; height:65%;
+    opacity:0; pointer-events:none; z-index:1;
+    background:linear-gradient(180deg, transparent 0%, rgba(255,0,17,0.4) 100%);
+    transform:translateY(-100%); transition:opacity .15s ease;
+  }
+  .scan-scanline::after{
+    content:''; position:absolute; left:0; bottom:0; width:100%; height:2px;
+    background:#ff0011; box-shadow:0 0 6px #ff0011;
+  }
+  .btn-scan-voice:hover .scan-scanline{ opacity:1; animation:scanSweep 2s linear infinite; }
+  @keyframes scanSweep{ from{ transform:translateY(-100%); } to{ transform:translateY(153.8%); } }
+  .scan-dot{
+    position:relative; z-index:3; width:6px; height:6px; border-radius:50%; flex-shrink:0;
+    background:var(--accent); box-shadow:0 0 8px 1px rgba(255,0,17,0.7);
+  }
+  .scan-text{ position:relative; z-index:3; }
+  .scan-text .char{ display:inline-block; transition:transform .1s ease; }
+  .btn-scan-voice:hover .scan-text .char{ animation:scanGlitch .32s ease-out; }
+  .scan-text .char:nth-child(2){ animation-delay:.03s; }
+  .scan-text .char:nth-child(3){ animation-delay:.06s; }
+  .scan-text .char:nth-child(4){ animation-delay:.09s; }
+  .scan-text .char:nth-child(5){ animation-delay:.12s; }
+  .scan-text .char:nth-child(6){ animation-delay:.15s; }
+  .scan-text .char:nth-child(7){ animation-delay:.18s; }
+  .scan-text .char:nth-child(8){ animation-delay:.21s; }
+  .scan-text .char:nth-child(9){ animation-delay:.24s; }
+  .scan-text .char:nth-child(10){ animation-delay:.27s; }
+  .scan-text .char:nth-child(11){ animation-delay:.30s; }
+  .scan-text .char:nth-child(12){ animation-delay:.33s; }
+  .scan-text .char:nth-child(13){ animation-delay:.36s; }
+  .scan-text .char:nth-child(14){ animation-delay:.39s; }
+  .scan-text .char:nth-child(15){ animation-delay:.42s; }
+  .scan-text .char:nth-child(16){ animation-delay:.45s; }
+  .scan-text .char:nth-child(17){ animation-delay:.48s; }
+  .scan-text .char:nth-child(18){ animation-delay:.51s; }
+  .scan-text .char:nth-child(19){ animation-delay:.54s; }
+  .scan-text .char:nth-child(20){ animation-delay:.57s; }
+  @keyframes scanGlitch{
+    0%{ transform:translateX(0); text-shadow:0 0 0 rgba(255,0,17,0), 0 0 0 rgba(0,220,255,0); }
+    25%{ transform:translateX(-2px); text-shadow:2px 0 0 rgba(255,0,17,0.75), -2px 0 0 rgba(0,220,255,0.75); }
+    50%{ transform:translateX(2px); text-shadow:-2px 0 0 rgba(255,0,17,0.75), 2px 0 0 rgba(0,220,255,0.75); }
+    75%{ transform:translateX(-2px); text-shadow:2px 0 0 rgba(255,0,17,0.75), -2px 0 0 rgba(0,220,255,0.75); }
+    100%{ transform:translateX(0); text-shadow:0 0 0 rgba(255,0,17,0), 0 0 0 rgba(0,220,255,0); }
+  }
+  .scan-icon{ position:relative; z-index:3; font-size:14px; line-height:1; color:#ff0011; transition:color .3s ease, transform .3s ease; }
+  .btn-scan-voice:hover .scan-icon{ transform:translateX(3px); color:#ff3344; }
+  @media (max-width:640px){ .btn-scan-voice .label-full{ display:none; } .btn-scan-voice .label-short{ display:inline-flex; } }
+  @media (min-width:641px){ .btn-scan-voice .label-short{ display:none; } }
   .btn-talk:hover{transform:translateY(-1px); opacity:.92;}
 
   /* ---------- universe hand (Originkit Hero-28 extraction) ---------- */
@@ -519,10 +575,18 @@
     Work Artificial
   </div>
   <div class="header-actions">
-    <a class="btn-voice-demo" href="demo-voice-agent.html">
-      <span class="dot"></span>
-      <span class="label-full">Try Demo Voice Agent</span>
-      <span class="label-short">Voice Demo</span>
+    <a class="btn-scan-voice" href="demo-voice-agent.html" aria-label="Try Demo Voice Agent">
+      <svg class="scan-brackets" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+        <path class="scan-bracket tl" d=""></path>
+        <path class="scan-bracket tr" d=""></path>
+        <path class="scan-bracket br" d=""></path>
+        <path class="scan-bracket bl" d=""></path>
+      </svg>
+      <span class="scan-scanline" aria-hidden="true"></span>
+      <span class="scan-dot" aria-hidden="true"></span>
+      <span class="scan-text label-full"><span class="char">T</span><span class="char">r</span><span class="char">y</span><span class="char">&nbsp;</span><span class="char">D</span><span class="char">e</span><span class="char">m</span><span class="char">o</span><span class="char">&nbsp;</span><span class="char">V</span><span class="char">o</span><span class="char">i</span><span class="char">c</span><span class="char">e</span><span class="char">&nbsp;</span><span class="char">A</span><span class="char">g</span><span class="char">e</span><span class="char">n</span><span class="char">t</span></span>
+      <span class="scan-text label-short"><span class="char">V</span><span class="char">o</span><span class="char">i</span><span class="char">c</span><span class="char">e</span><span class="char">&nbsp;</span><span class="char">D</span><span class="char">e</span><span class="char">m</span><span class="char">o</span></span>
+      <span class="scan-icon" aria-hidden="true">&rarr;</span>
     </a>
     <button class="btn-talk" onclick="focusFinalEmail('lets_talk')">Let's talk</button>
   </div>
@@ -1118,6 +1182,65 @@
   }
   const bhLogoEl = document.getElementById('bh-logo');
   if(bhLogoEl) initBlackHole(bhLogoEl);
+
+  // Scan Grid Button (Originkit-style animated CTA) — ported to plain
+  // CSS/JS since this site has no React/framer-motion build step. Corner
+  // brackets extend on hover (SVG path 'd' interpolated via CSS transition),
+  // a scanline sweeps through the button, and the label glitches with a
+  // red/cyan RGB split. Colors use the site's own red/black accent instead
+  // of the pasted preset's purple/coral so it stays on-brand.
+  (function initScanButton(){
+    const IDLE_ARM_PCT = 8, HOVER_ARM_PCT = 65, RADIUS = 12;
+    function armFor(pct, w, h){ return (pct / 100) * Math.min(w, h) / 2; }
+    function cornerPaths(w, h, r, arm){
+      const clampedR = Math.min(r, w / 2, h / 2);
+      const so = 0.75;
+      const R = Math.max(0.01, clampedR - so);
+      const Ro = clampedR;
+      const armH = Math.min(arm, Math.max(0, h / 2 - Ro));
+      const armW = Math.min(arm, Math.max(0, w / 2 - Ro));
+      return {
+        tl: `M ${so} ${Ro + armH} L ${so} ${Ro} A ${R} ${R} 0 0 1 ${Ro} ${so} L ${Ro + armW} ${so}`,
+        tr: `M ${w - Ro - armW} ${so} L ${w - Ro} ${so} A ${R} ${R} 0 0 1 ${w - so} ${Ro} L ${w - so} ${Ro + armH}`,
+        br: `M ${w - so} ${h - Ro - armH} L ${w - so} ${h - Ro} A ${R} ${R} 0 0 1 ${w - Ro} ${h - so} L ${w - Ro - armW} ${h - so}`,
+        bl: `M ${Ro + armW} ${h - so} L ${Ro} ${h - so} A ${R} ${R} 0 0 1 ${so} ${h - Ro} L ${so} ${h - Ro - armH}`
+      };
+    }
+    const btn = document.querySelector('.btn-scan-voice');
+    if(!btn) return;
+    const svg = btn.querySelector('.scan-brackets');
+    const pTL = btn.querySelector('.scan-bracket.tl');
+    const pTR = btn.querySelector('.scan-bracket.tr');
+    const pBR = btn.querySelector('.scan-bracket.br');
+    const pBL = btn.querySelector('.scan-bracket.bl');
+    let w = 0, h = 0, isHover = false;
+    function paint(armPct){
+      if(w <= 0 || h <= 0) return;
+      const paths = cornerPaths(w, h, RADIUS, armFor(armPct, w, h));
+      pTL.setAttribute('d', paths.tl);
+      pTR.setAttribute('d', paths.tr);
+      pBR.setAttribute('d', paths.br);
+      pBL.setAttribute('d', paths.bl);
+    }
+    function measure(){
+      w = btn.clientWidth; h = btn.clientHeight;
+      if(w <= 0 || h <= 0) return;
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      paint(isHover ? HOVER_ARM_PCT : IDLE_ARM_PCT);
+    }
+    if(typeof ResizeObserver !== 'undefined'){
+      new ResizeObserver(measure).observe(btn);
+    } else {
+      window.addEventListener('resize', measure);
+    }
+    measure();
+    btn.addEventListener('mouseenter', function(){ isHover = true; paint(HOVER_ARM_PCT); });
+    btn.addEventListener('mouseleave', function(){ isHover = false; paint(IDLE_ARM_PCT); });
+    // Touch devices have no hover — give a brief tap-triggered flourish so
+    // the animation isn't dead weight on mobile.
+    btn.addEventListener('touchstart', function(){ isHover = true; paint(HOVER_ARM_PCT); }, { passive:true });
+    btn.addEventListener('touchend', function(){ setTimeout(function(){ isHover = false; paint(IDLE_ARM_PCT); }, 400); }, { passive:true });
+  })();
 
   // Sample dashboard preview — a live scaled-down iframe of the real deployed
   // dashboard (not a static screenshot), so it never goes stale. Purely
