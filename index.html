@@ -1176,6 +1176,19 @@
     setTimeout(()=>el.focus(), 450);
   }
 
+  // Arriving via a direct link with #cta-email (e.g. "Contact Us" from the
+  // demo-voice-agent page) can't rely on the browser's native fragment-scroll:
+  // this page has iframes, webfonts, and JS-driven layout that shift the
+  // page's height after the browser's one-time jump-to-hash already ran, so
+  // it can land you somewhere else entirely (like the dashboard preview,
+  // whichever section is at that stale scroll offset). Re-scroll explicitly
+  // with JS once things have actually settled.
+  if(window.location.hash === '#cta-email'){
+    window.addEventListener('load', function(){
+      setTimeout(function(){ focusFinalEmail(); }, 500);
+    });
+  }
+
   // AI receptionist audio sample — full file stays intact, but playback
   // should always jump to 1:31 (the interesting part). The #t=91 media
   // fragment in the src handles this in most browsers already; this is a
