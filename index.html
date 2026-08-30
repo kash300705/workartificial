@@ -412,6 +412,31 @@
     .testi-head h2{ font-size:28px; }
   }
 
+  /* ---------- sample dashboard preview (live iframe of the real deployed dashboard) ---------- */
+  .dash-preview-head{ text-align:center; max-width:640px; margin:0 auto 32px; }
+  .dash-preview-head h2{ font-size:32px; letter-spacing:-0.02em; }
+  .dash-preview-card{
+    display:block; max-width:640px; margin:0 auto; text-decoration:none;
+    border:1px solid var(--card-border); border-radius:20px; overflow:hidden;
+    background:#0a0a0a; transition:transform .35s var(--ease), border-color .3s ease;
+  }
+  .dash-preview-card:hover{ transform:translateY(-4px); border-color:rgba(255,0,17,0.3); }
+  .dash-preview-frame{
+    position:relative; width:100%; aspect-ratio:1400/900; overflow:hidden; background:#0d0d0d;
+    pointer-events:none;
+  }
+  .dash-preview-frame iframe{
+    position:absolute; top:0; left:0; width:1400px; height:900px;
+    border:none; transform-origin:top left;
+  }
+  .dash-preview-cta{
+    padding:16px 22px; font-size:14px; font-weight:500; color:var(--text-dim);
+    border-top:1px solid var(--card-border);
+  }
+  @media (max-width:640px){
+    .dash-preview-head h2{ font-size:26px; }
+  }
+
   /* ---------- founder / built ---------- */
   .founder-block{
     display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;
@@ -690,6 +715,21 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SAMPLE DASHBOARD PREVIEW -->
+<section>
+  <div class="wrap">
+    <div class="dash-preview-head reveal">
+      <h2>See the dashboard live.</h2>
+    </div>
+    <a href="sample-dashboard.html" class="dash-preview-card reveal" aria-label="Preview the sample dashboard">
+      <div class="dash-preview-frame">
+        <iframe src="https://wa-aios-dashboard.onrender.com/" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      </div>
+      <div class="dash-preview-cta">Open sample dashboard →</div>
+    </a>
   </div>
 </section>
 
@@ -1085,6 +1125,24 @@
   }
   const bhLogoEl = document.getElementById('bh-logo');
   if(bhLogoEl) initBlackHole(bhLogoEl);
+
+  // Sample dashboard preview — a live scaled-down iframe of the real deployed
+  // dashboard (not a static screenshot), so it never goes stale. Purely
+  // visual/non-interactive (pointer-events:none); the whole card is the link.
+  const dashFrameWrap = document.querySelector('.dash-preview-frame');
+  if(dashFrameWrap){
+    const dashIframe = dashFrameWrap.querySelector('iframe');
+    function scaleDashPreview(){
+      const w = dashFrameWrap.clientWidth;
+      if(w > 0 && dashIframe) dashIframe.style.transform = 'scale(' + (w/1400) + ')';
+    }
+    if(typeof ResizeObserver !== 'undefined'){
+      new ResizeObserver(scaleDashPreview).observe(dashFrameWrap);
+    } else {
+      window.addEventListener('resize', scaleDashPreview);
+    }
+    scaleDashPreview();
+  }
 
   // Universe-hand hero visual (BlackHole.tsx defaults, overridden exactly as
   // UniverseHandAnimation.tsx does: tilt 12, tiltSideway 158, outerRadius 75,

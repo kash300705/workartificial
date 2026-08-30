@@ -61,18 +61,13 @@
     padding:28px 40px;
   }
   .logo{
-    display:flex; align-items:center; gap:10px; font-weight:500; font-size:14px;
+    display:flex; align-items:center; gap:10px; font-weight:500; font-size:15px;
     letter-spacing:0.08em; text-transform:uppercase; color:#fff; text-decoration:none;
   }
-  .logo-dot{
-    width:28px; height:28px; border-radius:50%; flex-shrink:0;
-    background:#000; position:relative; overflow:hidden;
-    box-shadow:0 0 14px rgba(255,0,17,0.28), inset 0 0 0 1px rgba(255,255,255,0.08);
-  }
-  .logo-dot::after{
-    content:''; position:absolute; inset:0; margin:auto; width:9px; height:9px; border-radius:50%;
-    background:var(--accent); box-shadow:0 0 10px 2px rgba(255,0,17,0.7);
-    top:0; bottom:0; left:0; right:0;
+  .bh-logo{
+    width:34px; height:34px; border-radius:50%; position:relative; overflow:hidden;
+    flex-shrink:0; background:#000;
+    box-shadow:0 0 14px rgba(255,0,17,0.22), inset 0 0 0 1px rgba(255,255,255,0.08);
   }
   .back-link{ color:var(--text-mute); font-size:13px; text-decoration:none; transition:color .25s ease; }
   .back-link:hover{ color:#fff; }
@@ -95,27 +90,39 @@
   p.dv-sub{ color:var(--text-dim); font-size:16px; max-width:480px; margin:16px auto 0; line-height:1.55; }
   p.dv-limit{ color:var(--text-mute); font-size:13px; margin-top:10px; letter-spacing:0.02em; }
 
-  /* ---------- orb stage ---------- */
+  /* ---------- orb stage (visual only — no buttons live inside it) ---------- */
   .orb-stage{
     position:relative; width:min(340px, 68vw); aspect-ratio:1;
-    margin:46px auto 8px;
+    margin:46px auto 0;
     display:flex; align-items:center; justify-content:center;
   }
-  .orb-stage canvas{ position:absolute; inset:-18%; width:136%; height:136%; display:block; }
+  .orb-stage canvas{ position:absolute; inset:-6%; width:112%; height:112%; display:block; }
   .orb-ring{
     position:absolute; inset:0; border-radius:50%;
     border:1px solid rgba(255,255,255,0.08);
     transition:border-color .5s ease, box-shadow .5s ease;
+    pointer-events:none;
   }
   .orb-stage.state-listening .orb-ring{ box-shadow:0 0 60px 6px rgba(255,0,17,0.10); }
   .orb-stage.state-speaking .orb-ring{ box-shadow:0 0 90px 14px rgba(255,0,17,0.22); border-color:rgba(255,0,17,0.25); }
   .orb-stage.state-connecting .orb-ring{ box-shadow:0 0 50px 8px rgba(255,255,255,0.08); }
 
-  .orb-overlay{
-    position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:14px;
-    pointer-events:none;
+  /* small decorative mic glyph centered inside the orb — idle state only,
+     purely visual (part of the animation's identity), never the click target */
+  .orb-center-icon{
+    position:relative; z-index:2; color:rgba(255,255,255,0.55);
+    display:flex; align-items:center; justify-content:center;
+    pointer-events:none; transition:opacity .4s ease;
   }
-  .orb-overlay > *{ pointer-events:auto; }
+  .orb-center-icon svg{ width:28px; height:28px; }
+  .orb-stage:not(.state-idle) .orb-center-icon{ opacity:0; }
+
+  /* ---------- controls — always BELOW the orb, never overlapping it ---------- */
+  .orb-controls{
+    position:relative; z-index:2;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+    margin:34px auto 0; width:100%;
+  }
 
   .mic-btn{
     width:78px; height:78px; border-radius:50%; border:none; cursor:pointer;
@@ -180,7 +187,8 @@
   @media (max-width:640px){
     header{ padding:20px 22px; }
     h1.dv-title{ font-size:32px; }
-    .orb-stage{ width:min(280px, 72vw); margin:34px auto 4px; }
+    .orb-stage{ width:min(280px, 72vw); margin:34px auto 0; }
+    .orb-controls{ margin-top:28px; }
   }
 </style>
 </head>
@@ -190,7 +198,7 @@
 <div class="bg-grain"></div>
 
 <header>
-  <a href="index.html" class="logo"><span class="logo-dot"></span>Work Artificial</a>
+  <a href="index.html" class="logo"><div class="bh-logo" id="bh-logo"></div>Work Artificial</a>
   <a href="index.html" class="back-link">Back to site</a>
 </header>
 
@@ -203,8 +211,12 @@
   <div class="orb-stage" id="orb-stage">
     <canvas id="orb-canvas"></canvas>
     <div class="orb-ring"></div>
-    <div class="orb-overlay" id="orb-overlay"><!-- populated by JS --></div>
+    <div class="orb-center-icon" id="orb-center-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+    </div>
   </div>
+
+  <div class="orb-controls" id="orb-controls"><!-- populated by JS — Start Demo / state / timer / ended panel all live here, below the orb --></div>
 </main>
 
 <script type="module">
@@ -481,6 +493,178 @@ import { RetellWebClient } from "https://esm.sh/retell-client-js-sdk@2";
 })();
 
 /* =========================================================================
+   Header logomark — identical "black hole" particle animation used on the
+   main site's header (same defaults), ported as-is so the two pages match.
+   ========================================================================= */
+(function(){
+  function initBlackHole(container, opts){
+    opts = Object.assign({
+      particleCount: 280,
+      colors: ['#ffffff','#ffffff','#ffffff','#ff0011'],
+      orbitSpeed: 7,
+      tilt: 17,
+      tiltSideway: 180,
+      trail: 50,
+      outerRadiusPct: 100,
+      pullSpeed: 0,
+      particleSizePx: 0.9,
+      voidRadiusRatio: 0.16,
+      voidXPct: 50,
+      voidYPct: 50,
+      radiusBias: 2,
+      verticalSpread: 0.9,
+      verticalRadiusMix: 0,
+      verticalRadiusCurve: 0,
+      brightnessMax: 1,
+      brightnessFalloff: 0.45,
+      brightnessFloor: 0.35,
+      brightnessJitterMin: 1,
+      keplerExponent: 0.5,
+      brightnessRadiusMix: 0
+    }, opts || {});
+
+    const bg = document.createElement('canvas');
+    const fg = document.createElement('canvas');
+    bg.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%;';
+    fg.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;';
+    container.appendChild(bg);
+    container.appendChild(fg);
+
+    const ctx = bg.getContext('2d');
+    const fgCtx = fg.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const trailAlpha = Math.max(0.02, 1 - (opts.trail/50) * 0.98);
+
+    let W = 0, H = 0, voidRadius = 6, perspective = 140, particles = [];
+
+    function outerRad(){ return voidRadius + (opts.outerRadiusPct/100) * ((W/2) - voidRadius); }
+
+    function heightFor(radius, outer){
+      const basis = voidRadius*(1-opts.verticalRadiusMix) + outer*opts.verticalRadiusMix;
+      const radiusFrac = Math.max(0, Math.min(1, (radius - voidRadius) / Math.max(1, outer - voidRadius)));
+      const curveMul = (1-opts.verticalRadiusCurve) + opts.verticalRadiusCurve*radiusFrac;
+      return (Math.random()-0.5) * basis * opts.verticalSpread * curveMul;
+    }
+
+    function seed(){
+      const outer = outerRad();
+      particles = [];
+      for(let i=0; i<opts.particleCount; i++){
+        const radius = voidRadius + Math.pow(Math.random(),opts.radiusBias) * (outer - voidRadius);
+        particles.push({
+          angle: Math.random()*Math.PI*2,
+          radius,
+          height: heightFor(radius, outer),
+          speedOffset: 0.75 + Math.random()*0.5,
+          colorIdx: Math.floor(Math.random()*opts.colors.length),
+          brightness: opts.brightnessJitterMin + Math.random()*(1-opts.brightnessJitterMin)
+        });
+      }
+    }
+
+    function resize(){
+      const r = container.getBoundingClientRect();
+      W = r.width; H = r.height;
+      if(W === 0 || H === 0) return;
+      bg.width = W*dpr; bg.height = H*dpr;
+      fg.width = W*dpr; fg.height = H*dpr;
+      voidRadius = Math.max(2, W*opts.voidRadiusRatio);
+      perspective = W*3.2;
+      seed();
+    }
+
+    if(typeof ResizeObserver !== 'undefined'){ new ResizeObserver(resize).observe(container); }
+    else { window.addEventListener('resize', resize); }
+    resize();
+
+    let last = performance.now();
+    function draw(now){
+      const dt = Math.min((now-last)/16.667, 3); last = now;
+      if(W > 0){
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        fgCtx.setTransform(dpr,0,0,dpr,0,0);
+        ctx.globalAlpha = 1; fgCtx.globalAlpha = 1;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = `rgba(0,0,0,${trailAlpha})`;
+        ctx.fillRect(0,0,W,H);
+        ctx.globalCompositeOperation = 'source-over';
+
+        fgCtx.globalCompositeOperation = 'destination-out';
+        fgCtx.fillStyle = `rgba(0,0,0,${trailAlpha})`;
+        fgCtx.fillRect(0,0,W,H);
+        fgCtx.globalCompositeOperation = 'source-over';
+
+        const outer = outerRad();
+        const voidCx = (opts.voidXPct/100)*W, voidCy = (opts.voidYPct/100)*H;
+        const tiltRad = (opts.tilt*Math.PI)/180;
+        const tiltSideRad = (opts.tiltSideway*Math.PI)/180;
+        const bgPts = [], fgPts = [];
+
+        for(let i=0; i<particles.length; i++){
+          const pt = particles[i];
+          const speedFactor = Math.pow(voidRadius/Math.max(pt.radius, voidRadius*0.4), opts.keplerExponent);
+          pt.angle += opts.orbitSpeed*speedFactor*pt.speedOffset*0.012*dt;
+          pt.radius -= (opts.pullSpeed/2)*speedFactor*pt.speedOffset*dt;
+          if(pt.radius < voidRadius){
+            pt.radius = voidRadius + 0.7*(outer-voidRadius) + Math.random()*0.3*(outer-voidRadius);
+            pt.angle = Math.random()*Math.PI*2;
+            pt.height = heightFor(pt.radius, outer);
+            pt.brightness = opts.brightnessJitterMin + Math.random()*(1-opts.brightnessJitterMin);
+            continue;
+          }
+          const cosA = Math.cos(pt.angle), sinA = Math.sin(pt.angle);
+          const xB = pt.radius*cosA, yB = pt.height, zB = pt.radius*sinA;
+          const x1 = xB, y1 = yB*Math.cos(tiltRad)+zB*Math.sin(tiltRad), z1 = -yB*Math.sin(tiltRad)+zB*Math.cos(tiltRad);
+          const x3 = x1*Math.cos(tiltSideRad)-y1*Math.sin(tiltSideRad);
+          const y3 = x1*Math.sin(tiltSideRad)+y1*Math.cos(tiltSideRad);
+          const z3 = z1;
+          const scale = perspective/(perspective+z3);
+          const px = voidCx + x3*scale, py = voidCy + y3*scale;
+          if(px < -10 || px > W+10 || py < -10 || py > H+10) continue;
+          const size = Math.max(0.3, opts.particleSizePx*scale);
+          const depthFactor = (z3+outer)/(2*outer);
+          const radiusFrac = Math.max(0, Math.min(1, (pt.radius - voidRadius) / Math.max(1, outer - voidRadius)));
+          const radiusBrightness = 1 - opts.brightnessRadiusMix*radiusFrac;
+          const alpha = Math.max(opts.brightnessFloor, opts.brightnessMax - depthFactor*opts.brightnessFalloff) * pt.brightness * radiusBrightness;
+          const color = opts.colors[pt.colorIdx % opts.colors.length];
+          const p = {x:px, y:py, size, alpha, z:z3, color};
+          if(z3 >= 0) bgPts.push(p); else fgPts.push(p);
+        }
+        bgPts.sort((a,b)=>b.z-a.z);
+        fgPts.sort((a,b)=>b.z-a.z);
+
+        for(const p of bgPts){ ctx.globalAlpha=p.alpha; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill(); }
+        ctx.globalAlpha = 1;
+
+        const grad = ctx.createRadialGradient(voidCx-voidRadius*0.25, voidCy-voidRadius*0.3, voidRadius*0.05, voidCx, voidCy, voidRadius);
+        grad.addColorStop(0,'rgba(10,10,10,1)');
+        grad.addColorStop(0.65,'rgba(0,0,0,1)');
+        grad.addColorStop(0.92,'rgba(20,20,20,1)');
+        grad.addColorStop(1,'rgba(20,20,20,0.9)');
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(voidCx,voidCy,voidRadius,0,Math.PI*2); ctx.fill();
+
+        const rim = ctx.createRadialGradient(voidCx,voidCy,voidRadius*0.88,voidCx,voidCy,voidRadius*1.05);
+        rim.addColorStop(0,'rgba(255,255,255,0)');
+        rim.addColorStop(0.6,'rgba(255,80,80,0.10)');
+        rim.addColorStop(0.85,'rgba(255,80,80,0.16)');
+        rim.addColorStop(1,'rgba(255,80,80,0)');
+        ctx.fillStyle = rim;
+        ctx.beginPath(); ctx.arc(voidCx,voidCy,voidRadius*1.05,0,Math.PI*2); ctx.fill();
+
+        for(const p of fgPts){ fgCtx.globalAlpha=p.alpha; fgCtx.fillStyle=p.color; fgCtx.beginPath(); fgCtx.arc(p.x,p.y,p.size,0,Math.PI*2); fgCtx.fill(); }
+        fgCtx.globalAlpha = 1;
+      }
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  }
+  const bhLogoEl = document.getElementById('bh-logo');
+  if(bhLogoEl) initBlackHole(bhLogoEl);
+})();
+
+/* =========================================================================
    Demo Voice Agent — state machine wiring the orb + timer + Retell call
    ========================================================================= */
 (function(){
@@ -489,7 +673,7 @@ import { RetellWebClient } from "https://esm.sh/retell-client-js-sdk@2";
   const CONTACT_URL = 'index.html#cta-email';
   const HOME_URL = 'index.html';
 
-  const overlay = document.getElementById('orb-overlay');
+  const overlay = document.getElementById('orb-controls');
   const stageEl = document.getElementById('orb-stage');
   const canvas = document.getElementById('orb-canvas');
 
@@ -517,10 +701,8 @@ import { RetellWebClient } from "https://esm.sh/retell-client-js-sdk@2";
   function renderIdle(){
     setStage('idle');
     overlay.innerHTML = `
-      <button class="mic-btn" id="start-btn" aria-label="Start demo">${svgMic()}</button>
       <button class="start-btn" id="start-btn-2">${svgMic()}Start Demo</button>
     `;
-    document.getElementById('start-btn').onclick = beginDemo;
     document.getElementById('start-btn-2').onclick = beginDemo;
   }
 
