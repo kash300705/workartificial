@@ -62,3 +62,4 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Internal error' });
   }
 };
+// redeploy trigger: 2026-08-30T11:42:32Z — picking up RETELL_API_KEY env var
