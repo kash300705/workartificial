@@ -2,7 +2,8 @@
   "name": "workartificial-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Work Artificial marketing site (static) + /api serverless functions for the Demo Voice Agent (Retell AI). middleware.mjs password-gates only the demo page.",
+  "type": "module",
+  "description": "Work Artificial marketing site (static) + /api serverless functions for the Demo Voice Agent (Retell AI). middleware.js password-gates only the demo page.",
   "dependencies": {
     "@vercel/functions": "^3.9.5"
   }

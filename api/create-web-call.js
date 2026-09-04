@@ -10,7 +10,7 @@
 
 const RETELL_AGENT_ID = 'agent_131b6861484f70939886cdc5ce';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   // Basic CORS/method guard — this endpoint is only meant to be called from
   // our own demo page via same-origin fetch, but we keep this simple and
   // explicit rather than wide open.
@@ -61,5 +61,4 @@ module.exports = async (req, res) => {
     console.error('create-web-call error:', err);
     res.status(500).json({ error: 'Internal error' });
   }
-};
-// redeploy trigger: 2026-08-30T11:42:32Z — picking up RETELL_API_KEY env var
+}
