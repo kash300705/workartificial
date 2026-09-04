@@ -481,7 +481,8 @@
     .testi-head h2{ font-size:28px; }
   }
 
-  /* ---------- sample dashboard preview (live iframe of the real deployed dashboard) ---------- */
+  /* ---------- sample dashboard preview (stylized illustrative mockup — not
+     a screenshot of the real password-protected dashboard) ---------- */
   .dash-preview-head{ text-align:center; max-width:640px; margin:0 auto 20px; }
   .dash-preview-head h2{ font-size:24px; letter-spacing:-0.02em; }
   .dash-preview-card{
@@ -491,12 +492,33 @@
   }
   .dash-preview-frame{
     position:relative; width:100%; aspect-ratio:1400/900; overflow:hidden; background:#0d0d0d;
-    pointer-events:none;
+    pointer-events:none; padding:7%;
   }
-  .dash-preview-frame iframe{
-    position:absolute; top:0; left:0; width:1400px; height:900px;
-    border:none; transform-origin:top left;
+  .dash-mock{ height:100%; display:flex; flex-direction:column; gap:4%; }
+  .dash-mock-top{ display:flex; align-items:center; gap:8px; }
+  .dash-mock-dot{
+    width:7px; height:7px; border-radius:50%; background:#2ecc71;
+    box-shadow:0 0 6px 1px rgba(46,204,113,0.6); flex-shrink:0;
   }
+  .dash-mock-title{ font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-mute); }
+  .dash-mock-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:3%; }
+  .dash-mock-stat{
+    display:flex; flex-direction:column; gap:3px; padding:9%;
+    border:1px solid var(--card-border); border-radius:10px; background:#000;
+  }
+  .dash-mock-stat .v{ font-size:17px; font-weight:700; color:#fff; }
+  .dash-mock-stat .l{ font-size:9px; color:var(--text-mute); letter-spacing:0.02em; }
+  .dash-mock-list{ display:flex; flex-direction:column; gap:8px; flex:1; }
+  .dash-mock-row{
+    display:flex; align-items:center; gap:9px; padding:9px 11px;
+    border:1px solid var(--card-border); border-radius:10px; background:#000;
+  }
+  .dash-mock-row-dot{ width:6px; height:6px; border-radius:50%; background:var(--text-mute); flex-shrink:0; }
+  .dash-mock-row-dot.ok{ background:#2ecc71; box-shadow:0 0 5px 1px rgba(46,204,113,0.5); }
+  .dash-mock-row-dot.warn{ background:var(--accent); box-shadow:0 0 5px 1px rgba(255,0,17,0.5); }
+  .dash-mock-row-main{ font-size:11px; color:#fff; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dash-mock-row-tag{ font-size:9px; color:#2ecc71; text-transform:uppercase; letter-spacing:0.04em; flex-shrink:0; }
+  .dash-mock-row-tag.muted{ color:var(--text-mute); }
   .dash-preview-cta{
     display:block; padding:10px 16px; font-size:12.5px; font-weight:500; color:var(--text-dim);
     border-top:1px solid var(--card-border); text-decoration:none;
@@ -792,11 +814,38 @@
 <section>
   <div class="wrap">
     <div class="dash-preview-head reveal">
-      <h2>See the dashboard live.</h2>
+      <h2>What the dashboard looks like.</h2>
     </div>
     <div class="dash-preview-card reveal">
-      <div class="dash-preview-frame">
-        <iframe src="https://wa-aios.vercel.app/" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      <div class="dash-preview-frame" aria-hidden="true">
+        <div class="dash-mock">
+          <div class="dash-mock-top">
+            <span class="dash-mock-dot"></span>
+            <span class="dash-mock-title">AI Receptionist Platform</span>
+          </div>
+          <div class="dash-mock-stats">
+            <div class="dash-mock-stat"><span class="v">127</span><span class="l">Calls · 30 days</span></div>
+            <div class="dash-mock-stat"><span class="v">97%</span><span class="l">Answered</span></div>
+            <div class="dash-mock-stat"><span class="v">29</span><span class="l">Booked on call</span></div>
+          </div>
+          <div class="dash-mock-list">
+            <div class="dash-mock-row">
+              <span class="dash-mock-row-dot ok"></span>
+              <span class="dash-mock-row-main">Balayage — Tue, 2:30 PM</span>
+              <span class="dash-mock-row-tag">Booked</span>
+            </div>
+            <div class="dash-mock-row">
+              <span class="dash-mock-row-dot ok"></span>
+              <span class="dash-mock-row-main">Men's Cut — Tue, 4:00 PM</span>
+              <span class="dash-mock-row-tag">Booked</span>
+            </div>
+            <div class="dash-mock-row">
+              <span class="dash-mock-row-dot warn"></span>
+              <span class="dash-mock-row-main">Inquiry — hours &amp; pricing</span>
+              <span class="dash-mock-row-tag muted">Answered</span>
+            </div>
+          </div>
+        </div>
       </div>
       <a href="https://wa-aios.vercel.app/" target="_blank" rel="noopener" class="dash-preview-cta">Open sample dashboard →</a>
     </div>
@@ -1254,24 +1303,6 @@
     btn.addEventListener('touchstart', function(){ isHover = true; paint(HOVER_ARM_PCT); }, { passive:true });
     btn.addEventListener('touchend', function(){ setTimeout(function(){ isHover = false; paint(IDLE_ARM_PCT); }, 400); }, { passive:true });
   })();
-
-  // Sample dashboard preview — a live scaled-down iframe of the real deployed
-  // dashboard (not a static screenshot), so it never goes stale. Purely
-  // visual/non-interactive (pointer-events:none); the whole card is the link.
-  const dashFrameWrap = document.querySelector('.dash-preview-frame');
-  if(dashFrameWrap){
-    const dashIframe = dashFrameWrap.querySelector('iframe');
-    function scaleDashPreview(){
-      const w = dashFrameWrap.clientWidth;
-      if(w > 0 && dashIframe) dashIframe.style.transform = 'scale(' + (w/1400) + ')';
-    }
-    if(typeof ResizeObserver !== 'undefined'){
-      new ResizeObserver(scaleDashPreview).observe(dashFrameWrap);
-    } else {
-      window.addEventListener('resize', scaleDashPreview);
-    }
-    scaleDashPreview();
-  }
 
   // Universe-hand hero visual (BlackHole.tsx defaults, overridden exactly as
   // UniverseHandAnimation.tsx does: tilt 12, tiltSideway 158, outerRadius 75,
