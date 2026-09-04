@@ -97,7 +97,7 @@
     fill:none; stroke:#ff0011; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round;
     transition:d .3s ease, filter .3s ease; filter:drop-shadow(0 0 0 rgba(255,0,17,0));
   }
-  .btn-scan-voice:hover .scan-bracket{ filter:drop-shadow(0 0 4px rgba(255,0,17,0.75)); }
+  .scan-btn:hover .scan-bracket{ filter:drop-shadow(0 0 4px rgba(255,0,17,0.75)); }
   .scan-scanline{
     position:absolute; left:0; top:0; width:100%; height:65%;
     opacity:0; pointer-events:none; z-index:1;
@@ -108,7 +108,7 @@
     content:''; position:absolute; left:0; bottom:0; width:100%; height:2px;
     background:#ff0011; box-shadow:0 0 6px #ff0011;
   }
-  .btn-scan-voice:hover .scan-scanline{ opacity:1; animation:scanSweep 2s linear infinite; }
+  .scan-btn:hover .scan-scanline{ opacity:1; animation:scanSweep 2s linear infinite; }
   @keyframes scanSweep{ from{ transform:translateY(-100%); } to{ transform:translateY(153.8%); } }
   .scan-dot{
     position:relative; z-index:3; width:6px; height:6px; border-radius:50%; flex-shrink:0;
@@ -116,7 +116,7 @@
   }
   .scan-text{ position:relative; z-index:3; }
   .scan-text .char{ display:inline-block; transition:transform .1s ease; }
-  .btn-scan-voice:hover .scan-text .char{ animation:scanGlitch .32s ease-out; }
+  .scan-btn:hover .scan-text .char{ animation:scanGlitch .32s ease-out; }
   .scan-text .char:nth-child(2){ animation-delay:.03s; }
   .scan-text .char:nth-child(3){ animation-delay:.06s; }
   .scan-text .char:nth-child(4){ animation-delay:.09s; }
@@ -136,6 +136,7 @@
   .scan-text .char:nth-child(18){ animation-delay:.51s; }
   .scan-text .char:nth-child(19){ animation-delay:.54s; }
   .scan-text .char:nth-child(20){ animation-delay:.57s; }
+  .scan-text .char:nth-child(21){ animation-delay:.60s; }
   @keyframes scanGlitch{
     0%{ transform:translateX(0); text-shadow:0 0 0 rgba(255,0,17,0), 0 0 0 rgba(0,220,255,0); }
     25%{ transform:translateX(-2px); text-shadow:2px 0 0 rgba(255,0,17,0.75), -2px 0 0 rgba(0,220,255,0.75); }
@@ -144,9 +145,22 @@
     100%{ transform:translateX(0); text-shadow:0 0 0 rgba(255,0,17,0), 0 0 0 rgba(0,220,255,0); }
   }
   .scan-icon{ position:relative; z-index:3; font-size:14px; line-height:1; color:#ff0011; transition:color .3s ease, transform .3s ease; }
-  .btn-scan-voice:hover .scan-icon{ transform:translateX(3px); color:#ff3344; }
+  .scan-btn:hover .scan-icon{ transform:translateX(3px); color:#ff3344; }
   @media (max-width:640px){ .btn-scan-voice .label-full{ display:none; } .btn-scan-voice .label-short{ display:inline-flex; } }
   @media (min-width:641px){ .btn-scan-voice .label-short{ display:none; } }
+
+  /* big animated "Open sample dashboard" button — same scan-grid treatment,
+     bigger and centered, for the dashboard-preview card footer */
+  .dash-open-btn{
+    position:relative; display:flex; align-items:center; justify-content:center; gap:10px;
+    color:#fff; font-size:15px; font-weight:600; letter-spacing:0.01em;
+    text-decoration:none; border-top:1px solid var(--card-border);
+    padding:18px 20px; background:#000;
+    overflow:hidden; cursor:pointer;
+    transition:background .3s ease;
+  }
+  .dash-open-btn:hover{ background:#0d0000; }
+  .dash-open-btn .scan-icon{ font-size:16px; }
   .btn-talk:hover{transform:translateY(-1px); opacity:.92;}
 
   /* ---------- universe hand (Originkit Hero-28 extraction) ---------- */
@@ -519,12 +533,6 @@
   .dash-mock-row-main{ font-size:11px; color:#fff; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .dash-mock-row-tag{ font-size:9px; color:#2ecc71; text-transform:uppercase; letter-spacing:0.04em; flex-shrink:0; }
   .dash-mock-row-tag.muted{ color:var(--text-mute); }
-  .dash-preview-cta{
-    display:block; padding:10px 16px; font-size:12.5px; font-weight:500; color:var(--text-dim);
-    border-top:1px solid var(--card-border); text-decoration:none;
-    transition:color .2s ease, background .2s ease;
-  }
-  .dash-preview-cta:hover{ color:#fff; background:rgba(255,0,17,0.06); }
   @media (max-width:640px){
     .dash-preview-head h2{ font-size:20px; }
     .dash-preview-card{ max-width:280px; }
@@ -610,7 +618,7 @@
     Work Artificial
   </div>
   <div class="header-actions">
-    <a class="btn-scan-voice" href="demo-voice-agent.html" aria-label="Try Demo Voice Agent">
+    <a class="btn-scan-voice scan-btn" href="demo-voice-agent.html" aria-label="Try Demo Voice Agent">
       <svg class="scan-brackets" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
         <path class="scan-bracket tl" d=""></path>
         <path class="scan-bracket tr" d=""></path>
@@ -847,7 +855,17 @@
           </div>
         </div>
       </div>
-      <a href="https://wa-aios.vercel.app/" target="_blank" rel="noopener" class="dash-preview-cta">Open sample dashboard →</a>
+      <a href="https://wa-aios.vercel.app/" target="_blank" rel="noopener" class="dash-open-btn scan-btn" aria-label="Open sample dashboard">
+        <svg class="scan-brackets" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+          <path class="scan-bracket tl" d=""></path>
+          <path class="scan-bracket tr" d=""></path>
+          <path class="scan-bracket br" d=""></path>
+          <path class="scan-bracket bl" d=""></path>
+        </svg>
+        <span class="scan-scanline" aria-hidden="true"></span>
+        <span class="scan-text"><span class="char">O</span><span class="char">p</span><span class="char">e</span><span class="char">n</span><span class="char">&nbsp;</span><span class="char">s</span><span class="char">a</span><span class="char">m</span><span class="char">p</span><span class="char">l</span><span class="char">e</span><span class="char">&nbsp;</span><span class="char">d</span><span class="char">a</span><span class="char">s</span><span class="char">h</span><span class="char">b</span><span class="char">o</span><span class="char">a</span><span class="char">r</span><span class="char">d</span></span>
+        <span class="scan-icon" aria-hidden="true">&rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -1269,40 +1287,42 @@
         bl: `M ${Ro + armW} ${h - so} L ${Ro} ${h - so} A ${R} ${R} 0 0 1 ${so} ${h - Ro} L ${so} ${h - Ro - armH}`
       };
     }
-    const btn = document.querySelector('.btn-scan-voice');
-    if(!btn) return;
-    const svg = btn.querySelector('.scan-brackets');
-    const pTL = btn.querySelector('.scan-bracket.tl');
-    const pTR = btn.querySelector('.scan-bracket.tr');
-    const pBR = btn.querySelector('.scan-bracket.br');
-    const pBL = btn.querySelector('.scan-bracket.bl');
-    let w = 0, h = 0, isHover = false;
-    function paint(armPct){
-      if(w <= 0 || h <= 0) return;
-      const paths = cornerPaths(w, h, RADIUS, armFor(armPct, w, h));
-      pTL.setAttribute('d', paths.tl);
-      pTR.setAttribute('d', paths.tr);
-      pBR.setAttribute('d', paths.br);
-      pBL.setAttribute('d', paths.bl);
+    function initOne(btn){
+      const svg = btn.querySelector('.scan-brackets');
+      const pTL = btn.querySelector('.scan-bracket.tl');
+      const pTR = btn.querySelector('.scan-bracket.tr');
+      const pBR = btn.querySelector('.scan-bracket.br');
+      const pBL = btn.querySelector('.scan-bracket.bl');
+      if(!svg || !pTL || !pTR || !pBR || !pBL) return;
+      let w = 0, h = 0, isHover = false;
+      function paint(armPct){
+        if(w <= 0 || h <= 0) return;
+        const paths = cornerPaths(w, h, RADIUS, armFor(armPct, w, h));
+        pTL.setAttribute('d', paths.tl);
+        pTR.setAttribute('d', paths.tr);
+        pBR.setAttribute('d', paths.br);
+        pBL.setAttribute('d', paths.bl);
+      }
+      function measure(){
+        w = btn.clientWidth; h = btn.clientHeight;
+        if(w <= 0 || h <= 0) return;
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        paint(isHover ? HOVER_ARM_PCT : IDLE_ARM_PCT);
+      }
+      if(typeof ResizeObserver !== 'undefined'){
+        new ResizeObserver(measure).observe(btn);
+      } else {
+        window.addEventListener('resize', measure);
+      }
+      measure();
+      btn.addEventListener('mouseenter', function(){ isHover = true; paint(HOVER_ARM_PCT); });
+      btn.addEventListener('mouseleave', function(){ isHover = false; paint(IDLE_ARM_PCT); });
+      // Touch devices have no hover — give a brief tap-triggered flourish so
+      // the animation isn't dead weight on mobile.
+      btn.addEventListener('touchstart', function(){ isHover = true; paint(HOVER_ARM_PCT); }, { passive:true });
+      btn.addEventListener('touchend', function(){ setTimeout(function(){ isHover = false; paint(IDLE_ARM_PCT); }, 400); }, { passive:true });
     }
-    function measure(){
-      w = btn.clientWidth; h = btn.clientHeight;
-      if(w <= 0 || h <= 0) return;
-      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-      paint(isHover ? HOVER_ARM_PCT : IDLE_ARM_PCT);
-    }
-    if(typeof ResizeObserver !== 'undefined'){
-      new ResizeObserver(measure).observe(btn);
-    } else {
-      window.addEventListener('resize', measure);
-    }
-    measure();
-    btn.addEventListener('mouseenter', function(){ isHover = true; paint(HOVER_ARM_PCT); });
-    btn.addEventListener('mouseleave', function(){ isHover = false; paint(IDLE_ARM_PCT); });
-    // Touch devices have no hover — give a brief tap-triggered flourish so
-    // the animation isn't dead weight on mobile.
-    btn.addEventListener('touchstart', function(){ isHover = true; paint(HOVER_ARM_PCT); }, { passive:true });
-    btn.addEventListener('touchend', function(){ setTimeout(function(){ isHover = false; paint(IDLE_ARM_PCT); }, 400); }, { passive:true });
+    document.querySelectorAll('.scan-btn').forEach(initOne);
   })();
 
   // Universe-hand hero visual (BlackHole.tsx defaults, overridden exactly as
