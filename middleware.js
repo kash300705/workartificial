@@ -118,7 +118,16 @@ function passwordPage({ error, unconfigured } = {}) {
   }
   button:hover{ opacity:.9; transform:translateY(-1px); }
   .error{ color:#ff4d5e; font-size:12.5px; margin-top:14px; }
-  .back{ display:inline-block; margin-top:26px; color:rgba(255,255,255,0.35); font-size:12.5px; text-decoration:none; }
+  .divider{ height:1px; background:rgba(255,255,255,0.08); margin:28px 0 22px; }
+  .gate-cta p{ font-size:12.5px; color:rgba(255,255,255,0.45); line-height:1.55; margin-bottom:14px; }
+  .contact-btn{
+    display:inline-block; background:transparent; color:#fff;
+    border:1px solid rgba(255,0,17,0.4); border-radius:10px;
+    padding:11px 22px; font-family:inherit; font-weight:600; font-size:13.5px;
+    text-decoration:none; transition:background .2s ease, border-color .2s ease;
+  }
+  .contact-btn:hover{ background:rgba(255,0,17,0.1); border-color:rgba(255,0,17,0.7); }
+  .back{ display:inline-block; margin-top:22px; color:rgba(255,255,255,0.35); font-size:12.5px; text-decoration:none; }
   .back:hover{ color:rgba(255,255,255,0.6); }
 </style>
 </head>
@@ -132,6 +141,11 @@ function passwordPage({ error, unconfigured } = {}) {
       <button type="submit">Continue</button>
     </form>
     ${message}
+    <div class="divider"></div>
+    <div class="gate-cta">
+      <p>Want to try our new AI voice demo? Contact us — we'll send you the password to try it, and can even set you up with a tailored, live AI voice agent demo for your business.</p>
+      <a href="/index.html#cta-email" class="contact-btn">Contact Us</a>
+    </div>
     <a href="/" class="back">&larr; Back to Work Artificial</a>
   </div>
 </body>
